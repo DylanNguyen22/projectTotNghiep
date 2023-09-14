@@ -10,21 +10,36 @@ class MajorsModel extends Model
 {
     use HasFactory;
 
-    public function getAllMajors(){
+    public function getAllMajors()
+    {
         $majors = DB::select('SELECT * FROM nganh ORDER BY MaNganh DESC');
         return $majors;
     }
 
-    public function addMajor($data){
+    public function addMajor($data)
+    {
         $TenNganh = $data['TenNganh'];
-        DB::select("INSERT INTO `nganh`(`TenNganh`) VALUES ('$TenNganh')");
+        $check = DB::select("SELECT * FROM nganh WHERE TenNganh = '$TenNganh'");
+        if ($check == null) {
+            DB::select("INSERT INTO `nganh`(`TenNganh`) VALUES ('$TenNganh')");
+            return 'success';
+        } else {
+            return 'false';
+        }
     }
 
-    public function editMajor($data){
+    public function editMajor($data)
+    {
         $MaNganh = $data['MaNganh'];
         $TenNganh = $data['TenNganh'];
 
-        DB::select("UPDATE `nganh` SET `TenNganh`='$TenNganh' WHERE `MaNganh` = '$MaNganh'");
+        $check = DB::select("SELECT * FROM nganh WHERE TenNganh = '$TenNganh'");
+        if ($check == null) {
+            DB::select("UPDATE `nganh` SET `TenNganh`='$TenNganh' WHERE `MaNganh` = '$MaNganh'");
+            return 'success';
+        } else {
+            return 'false';
+        }
     }
 
     public function deleteMajor($data){

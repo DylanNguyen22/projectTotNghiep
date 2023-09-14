@@ -38,8 +38,10 @@
                             <img class="w-100" src="{{ asset('assets/system_imgs/avt_default.jpg') }}" alt>
                         </div>
                     </div>
-                    <span class="mx-1 text-secondary">Nguyễn Văn A</span>
+                    <span class="mx-1 text-secondary">{{ $TenGV }}</span>
                 </div>
+
+                <a href="/dangxuat" class="link-danger text-decoration-none mb-1"> Đăng xuất</a>
             </div>
         </div>
         <div class="alert py-2 alert-success text-center fade" role="alert" id="successAlert">

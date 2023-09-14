@@ -17,13 +17,13 @@ class MajorsController extends Controller
     }
 
     public function addMajor(Request $request){
-        $TenNganh = $this->majors->addMajor($request->all());
-        return response()->json($request);
+        $result = $this->majors->addMajor($request->all());
+        return response()->json($result);
     }
 
     public function editMajor(Request $request){
-        $this->majors->editMajor($request->all());
-        // return response()->json($request);
+        $result = $this->majors->editMajor($request->all());
+        return response()->json($result);
     }
 
     public function deleteMajor(Request $request){

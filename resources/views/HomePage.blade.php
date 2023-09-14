@@ -2,7 +2,7 @@
 
 @section('content')
     <input type="hidden" id="subjectDetailMemory" value="[]">
-    <div class="p-2 d-flex justify-content-between mb-4">
+    <div class="p-4 px-0 d-flex justify-content-between mb-4">
         <form action="{{ route('subject_detail.list') }}" method="GET" id="subjectDetailFiler_form">
             <div class="d-flex">
                 <div class="d-flex justify-content-between me-2">
@@ -69,115 +69,31 @@
 
     <div class>
         <form action="{{ route('subjectDetail_lecturer.edit') }}" id="subjectDetailList_container" method="POST">
-            <table class="table table-striped table-bordered text-center" id="subjectDetailTable">
-                {{-- <thead class="table bg-primary text-light">
-                    <tr>
-                        <th>STT</th>
-                        <th>Mã môn</th>
-                        <th>Tên môn</th>
-                        <th>Số tín chỉ</th>
-                        <th>Số lượng sinh viên</th>
-                        <th>Giảng viên phụ trách</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>
-                            <div class="input-group">
-                                <select class="form-select" id="inputGroupSelect01">
-                                    <option selected>data sample</option>
-                                    <option value="1">data sample</option>
-                                    <option value="2">data sample</option>
-                                    <option value="3">data sample</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>
-                            <div class="input-group">
-                                <select class="form-select" id="inputGroupSelect01">
-                                    <option selected>data sample</option>
-                                    <option value="1">data sample</option>
-                                    <option value="2">data sample</option>
-                                    <option value="3">data sample</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>
-                            <div class="input-group">
-                                <select class="form-select" id="inputGroupSelect01">
-                                    <option selected>data sample</option>
-                                    <option value="1">data sample</option>
-                                    <option value="2">data sample</option>
-                                    <option value="3">data sample</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>Data sample</td>
-                        <td>
-                            <div class="input-group">
-                                <select class="form-select" id="inputGroupSelect01">
-                                    <option selected>data sample</option>
-                                    <option value="1">data sample</option>
-                                    <option value="2">data sample</option>
-                                    <option value="3">data sample</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody> --}}
-            </table>
+            <table class="table table-striped table-bordered text-center" id="subjectDetailTable"></table>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-primary mb-2" type="submit">Xác nhận</button>
             </div>
         </form>
     </div>
-
-    <!-- Bắt đầu form hiển thị danh sách năm học -->
     <div class="modal fade" id="popup1" tabindex="-1" aria-labelledby="popup1Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="popup1Label">Danh sách năm học</h5>
+                    <div class="alert py-2 alert-danger text-center fade fixed-top" role="alert" id="scolasticFalseAlert">
+                        Năm học đã tồn tại !
+                    </div>
+                    <div class="alert py-2 alert-success text-center fade fixed-top" role="alert"
+                        id="scolasticSuccessAlert">
+                        Thao tác thành công !
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{-- <form action>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Vui lòng nhập tên năm học cần thêm"
-                                aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Thêm</button>
-                        </div>
-                    </form> --}}
-
                     <div class="input-group mb-3">
                         <input type="text" id="scholasticSearch" class="form-control"
                             placeholder="Vui lòng nhập năm học cần tìm" aria-label="Recipient's username"
-                            aria-describedby="button-addon2">
+                            aria-describedby="button-addon2" onkeyup="searchScholastic()">
                         <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
                     </div>
 
@@ -186,13 +102,12 @@
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="addScholasticInput" name="scholasticName"
                                     placeholder="Vui lòng nhập năm học cần thêm" aria-label="Recipient's username"
-                                    aria-describedby="button-addon2">
+                                    aria-describedby="button-addon2" required>
                                 <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm +</button>
                                 @csrf
                             </div>
                         </form>
                     </div>
-
                     <form action="">
                         <div class="">
                             <table id="scholasticTable" class="table table-striped table-bordered">
@@ -212,15 +127,12 @@
             </div>
         </div>
     </div>
-    <!-- Kết thúc form hiển thị danh sách năm học -->
 
-    <!-- Bắt đầu form thêm học kì -->
     <div class="modal fade" id="popup2" tabindex="-1" aria-labelledby="popup2Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="popup2Label">Danh sách học kì</h5>
-                    {{-- <div class="" id="MaHK"></div> --}}
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -241,9 +153,7 @@
             </div>
         </div>
     </div>
-    <!-- Kết thúc form thêm học kì -->
 
-    <!-- Bắt đầu cửa sổ pop up thêm môm học -->
     <div class="modal fade" id="popup3" tabindex="-1" aria-labelledby="popup3Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -262,14 +172,19 @@
             </div>
         </div>
     </div>
-    <!-- Kết thúc cửa sổ pop up thêm môn học -->
 
-    <!-- Bắt đầu form thêm năm học -->
     <div class="modal fade" id="popup4" tabindex="-1" aria-labelledby="popup4Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="popup4Label">Danh sách ngành học</h5>
+                    <div class="alert py-2 alert-danger text-center fade fixed-top" role="alert" id="majorFalseAlert">
+                        Ngành học đã tồn tại !
+                    </div>
+                    <div class="alert py-2 alert-success text-center fade fixed-top z-index-2" role="alert"
+                        id="majorSuccessAlert">
+                        Thao tác thành công !
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -286,14 +201,7 @@
                     </div>
                     <div class="">
                         <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Danh sách ngành học</th>
-                                </tr>
-                            </thead>
-                            <tbody id="majorListTable_Body">
-
-                            </tbody>
+                            <tbody id="majorListTable_Body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -303,23 +211,17 @@
             </div>
         </div>
     </div>
-    <!-- Kết thúc form thêm năm học -->
 
     <div class="modal fade" id="popup5" tabindex="-1" aria-labelledby="popup5Label" aria-hidden="true">
         <div class="modal-dialog" style="margin-right: 45rem;">
             <div class="modal-content subjectPopup">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="popup5Label">Thêm môn học</h5>
+                    <h5 class="modal-title" id="popup5Label">Danh sách môn học</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <table class="table table-striped">
                         <thead id="subjectListTable_head">
-                            <tr>
-                                <th>Danh sách môn học</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
                             <tr>
                                 <th>Mã môn</th>
                                 <th>Tên môn</th>
@@ -339,13 +241,30 @@
     </div>
 
     <script>
+        function loadAllData() {
+            checkScholasticData();
+            setTimeout(function() {
+                checkSubjectDetailData();
+            }, 200);
+            setTimeout(function() {
+                checkSemesterData();
+            }, 300);
+            setTimeout(function() {
+                checkMajorData();
+            }, 500);
+            setTimeout(function() {
+                checkSubjectData();
+            }, 700);
+        }
+        setInterval(loadAllData, 700);
+
         // document.getElementById("successAlert").style.display = "none";
 
         function searchScholastic() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("scholasticSearch");
             filter = input.value.toUpperCase();
-            table = document.getElementById("scholasticTable");
+            table = document.getElementById("scholasticTableBody");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[0];
@@ -373,8 +292,67 @@
                 success: function(response) {
                     if (response.message != 'false') {
                         document.getElementById("addScholasticInput").value = "";
+                        document
+                            .getElementById(
+                                "scolasticFalseAlert"
+                            ).classList
+                            .remove("show")
+
+                        document
+                            .getElementById(
+                                "scolasticSuccessAlert"
+                            )
+                            .classList
+                            .add(
+                                "show"
+                            );
+
+                        setTimeout(
+                            function() {
+                                document
+                                    .getElementById(
+                                        "scolasticSuccessAlert"
+                                    )
+                                    .classList
+                                    .remove(
+                                        "show"
+                                    )
+                            },
+                            5000
+                        );
+
                     } else {
-                        alert("Năm học đã tồn tại");
+                        document
+                            .getElementById(
+                                "scolasticSuccessAlert"
+                            )
+                            .classList
+                            .remove(
+                                "show"
+                            )
+
+                        document
+                            .getElementById(
+                                "scolasticFalseAlert"
+                            )
+                            .classList
+                            .add(
+                                "show"
+                            );
+
+                        setTimeout(
+                            function() {
+                                document
+                                    .getElementById(
+                                        "scolasticFalseAlert"
+                                    )
+                                    .classList
+                                    .remove(
+                                        "show"
+                                    )
+                            },
+                            5000
+                        );
                     }
                 },
                 error: function(xhr) {
@@ -489,7 +467,6 @@
                                     td2.appendChild(editLink);
 
                                     var deleteLink = document.createElement("a");
-                                    deleteLink.id = "deleteScholastic" + data[key].MaNH;
                                     deleteLink.className =
                                         "link-danger text-decoration-none";
                                     deleteLink.href = "";
@@ -500,8 +477,7 @@
                                         "scholasticTableBody");
                                     table.appendChild(tr);
 
-                                    document.getElementById("deleteScholastic" + data[key]
-                                        .MaNH).addEventListener("click", function(
+                                    deleteLink.addEventListener("click", function(
                                         event) {
                                         event.preventDefault();
                                         if (confirm(
@@ -510,13 +486,7 @@
                                             var url = "/namhoc/xoanamhoc?id=" +
                                                 data[key].MaNH;
                                             axios.get(url)
-                                                .then(function(response) {
-                                                    var element = document
-                                                        .getElementById(data[
-                                                            key].TenNH);
-                                                    element.remove();
-                                                    // console.log(response.data);
-                                                })
+                                                .then(function(response) {})
                                                 .catch(function(error) {
                                                     console.log(error);
                                                 });
@@ -561,11 +531,67 @@
                                                 success: function(response) {
                                                     if (response.message !=
                                                         'false') {
-                                                        console.log(
-                                                            response);
+
+                                                        document
+                                                            .getElementById(
+                                                                "scolasticFalseAlert"
+                                                            ).classList
+                                                            .remove("show")
+
+                                                        document
+                                                            .getElementById(
+                                                                "scolasticSuccessAlert"
+                                                            )
+                                                            .classList
+                                                            .add(
+                                                                "show"
+                                                            );
+
+                                                        setTimeout(
+                                                            function() {
+                                                                document
+                                                                    .getElementById(
+                                                                        "scolasticSuccessAlert"
+                                                                    )
+                                                                    .classList
+                                                                    .remove(
+                                                                        "show"
+                                                                    )
+                                                            },
+                                                            5000
+                                                        );
+
                                                     } else {
-                                                        alert(
-                                                            "Năm học đã tồn tại! \n Vui lòng nhập tên năm học khác"
+                                                        document
+                                                            .getElementById(
+                                                                "scolasticSuccessAlert"
+                                                            )
+                                                            .classList
+                                                            .remove(
+                                                                "show"
+                                                            )
+
+                                                        document
+                                                            .getElementById(
+                                                                "scolasticFalseAlert"
+                                                            )
+                                                            .classList
+                                                            .add(
+                                                                "show"
+                                                            );
+
+                                                        setTimeout(
+                                                            function() {
+                                                                document
+                                                                    .getElementById(
+                                                                        "scolasticFalseAlert"
+                                                                    )
+                                                                    .classList
+                                                                    .remove(
+                                                                        "show"
+                                                                    )
+                                                            },
+                                                            5000
                                                         );
                                                     }
                                                 },
@@ -605,7 +631,7 @@
                 }
             });
         }
-        setInterval(checkScholasticData, 1000);
+        // setInterval(checkScholasticData, 1000);
 
         var currentSemesterData = [];
 
@@ -895,7 +921,7 @@
                 }
             });
         }
-        setInterval(checkSemesterData, 1000);
+        // setInterval(checkSemesterData, 1000);
 
         document.getElementById("addSemesterForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent the default form submission behavior
@@ -933,7 +959,81 @@
                     data: data,
                     success: function(response) {
                         // Handle successful form submission
-                        document.getElementById("addMajorName_input").value = "";
+                        if (response ==
+                            'success') {
+                            document
+                                .getElementById(
+                                    "addMajorName_input"
+                                )
+                                .value =
+                                "";
+
+                            document
+                                .getElementById(
+                                    "majorFalseAlert"
+                                )
+                                .classList
+                                .remove(
+                                    "show"
+                                )
+
+                            document
+                                .getElementById(
+                                    "majorSuccessAlert"
+                                )
+                                .classList
+                                .add(
+                                    "show"
+                                );
+
+                            setTimeout(
+                                function() {
+                                    document
+                                        .getElementById(
+                                            "majorSuccessAlert"
+                                        )
+                                        .classList
+                                        .remove(
+                                            "show"
+                                        )
+                                },
+                                5000
+                            );
+
+                        } else {
+                            document
+                                .getElementById(
+                                    "majorSuccessAlert"
+                                )
+                                .classList
+                                .remove(
+                                    "show"
+                                )
+
+                            document
+                                .getElementById(
+                                    "majorFalseAlert"
+                                )
+                                .classList
+                                .add(
+                                    "show"
+                                );
+
+                            setTimeout(
+                                function() {
+                                    document
+                                        .getElementById(
+                                            "majorFalseAlert"
+                                        )
+                                        .classList
+                                        .remove(
+                                            "show"
+                                        )
+                                },
+                                5000
+                            );
+                        }
+
                     },
                     error: function(xhr, status, error) {
                         // Handle error
@@ -1104,8 +1204,15 @@
                                         response[key].MaNganh;
                                     axios.get(url)
                                         .then(function(response) {
-                                            console.log(response);
-                                            // alert("a");
+                                            document.getElementById("majorSuccessAlert")
+                                                .classList.add("show");
+
+                                            setTimeout(
+                                                function() {
+                                                    document.getElementById(
+                                                            "majorSuccessAlert")
+                                                        .classList.remove("show")
+                                                }, 5000);
                                         })
                                         .catch(function(error) {
                                             console.log(error);
@@ -1145,9 +1252,80 @@
                                                     success: function(
                                                         response) {
                                                         // Handle successful form submission
-                                                        console.log(
-                                                            response
-                                                        );
+                                                        if (response ==
+                                                            'success') {
+                                                            document
+                                                                .getElementById(
+                                                                    "addMajorName_input"
+                                                                )
+                                                                .value =
+                                                                "";
+
+                                                            document
+                                                                .getElementById(
+                                                                    "majorFalseAlert"
+                                                                )
+                                                                .classList
+                                                                .remove(
+                                                                    "show"
+                                                                )
+
+                                                            document
+                                                                .getElementById(
+                                                                    "majorSuccessAlert"
+                                                                )
+                                                                .classList
+                                                                .add(
+                                                                    "show"
+                                                                );
+
+                                                            setTimeout(
+                                                                function() {
+                                                                    document
+                                                                        .getElementById(
+                                                                            "majorSuccessAlert"
+                                                                        )
+                                                                        .classList
+                                                                        .remove(
+                                                                            "show"
+                                                                        )
+                                                                },
+                                                                5000
+                                                            );
+
+                                                        } else {
+                                                            document
+                                                                .getElementById(
+                                                                    "majorSuccessAlert"
+                                                                )
+                                                                .classList
+                                                                .remove(
+                                                                    "show"
+                                                                )
+
+                                                            document
+                                                                .getElementById(
+                                                                    "majorFalseAlert"
+                                                                )
+                                                                .classList
+                                                                .add(
+                                                                    "show"
+                                                                );
+
+                                                            setTimeout(
+                                                                function() {
+                                                                    document
+                                                                        .getElementById(
+                                                                            "majorFalseAlert"
+                                                                        )
+                                                                        .classList
+                                                                        .remove(
+                                                                            "show"
+                                                                        )
+                                                                },
+                                                                5000
+                                                            );
+                                                        }
                                                     },
                                                     error: function(xhr,
                                                         status, error) {
@@ -1169,7 +1347,7 @@
                 }
             });
         }
-        setInterval(checkMajorData, 1000);
+        // setInterval(checkMajorData, 1000);
 
         var currentSubjectDetailData = [];
 
@@ -1192,7 +1370,7 @@
                 }
             });
         }
-        setInterval(checkSubjectDetailData, 1000);
+        // setInterval(checkSubjectDetailData, 1000);
 
         function loadData(filter) {
             // Get the form data'
@@ -1389,20 +1567,6 @@
             });
         }
 
-        // Call the loadData function when the page loads
-        $(document).ready(function() {
-            checkScholasticData();
-            setTimeout(function() {
-                checkSubjectDetailData();
-            }, 500);
-            setTimeout(function() {
-                checkSemesterData();
-            }, 700);
-            setTimeout(function() {
-                checkMajorData();
-            }, 1000);
-        });
-
         $('#subjectDetailFiler_form').on('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
             var formData = $(this).serialize();
@@ -1572,7 +1736,7 @@
                                                     document
                                                         .getElementById(
                                                             "successAlert"
-                                                            )
+                                                        )
                                                         .classList
                                                         .remove(
                                                             "show")
@@ -1597,12 +1761,6 @@
                 }
             });
         }
-        setInterval(checkSubjectData, 1000);
-
-
-        // document.getElementById("searchSubjectDetailTable").addEventListener("keyup", function() {
-        //     filterTable();
-        // });
 
         document.getElementById("searchSubjectDetailTable").addEventListener("keyup", function() {
             let input = this.value.toLowerCase();

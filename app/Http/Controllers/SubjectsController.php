@@ -13,7 +13,7 @@ class SubjectsController extends Controller
     }
 
     public function getAllSubjects(){
-        $subjectsList= $this->subjectsmodel->getAllSubjects();
+        $subjectsList = $this->subjectsmodel->getAllSubjects();
         return response()->json($subjectsList);
     }
 

@@ -21,14 +21,20 @@ use App\Http\Controllers\LecturersController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/a', function () {
+    return view('welcome');
+});
 
 Route::post('/doc-file-excel', [SiteController::class, 'handleReadExcelFile']);
 
+
+
 Route::prefix('/')->group(function () {
     Route::get('/', [SiteController::class, 'home_page']);
+    Route::get('/dangnhap', [SiteController::class, 'showLoginPage'])->name('login.show');
+    Route::post('/dangnhap', [SiteController::class, 'handleLogin'])->name('login.handle');
+    Route::get('/dangxuat', [SiteController::class, 'logout']);
+
     Route::post('test', [SiteController::class, 'test'])->name('update.data');
 });
 
@@ -54,17 +60,6 @@ Route::prefix('/nganhhoc')->group(function () {
     Route::get('/laydanhsachnganh', [MajorsController::class, 'getAllMajors'])->name('major.list');
     Route::post('/suanganhhoc', [MajorsController::class, 'editMajor'])->name('major.edit');
 });
-
-// Route::prefix('/monhoc')->group(function () {
-//     Route::get('/them-mon-hoc-bang-excel-file', [SubjectsController::class, 'showAddSubjectByExcelFile'])->name('subject_excel.add');
-//     Route::get('/xu-ly-them-mon-hoc-bang-excel-file', [SubjectsController::class, 'handleAddSubjectByExcelFile'])->name('subject_excel_handle.add');
-
-
-//     // Route::post('/themnganhhoc', [MajorsController::class, 'addMajor'])->name('major.add');
-//     // Route::get('/xoanganhhoc', [MajorsController::class, 'deleteMajor'])->name('major.delete');
-//     // Route::get('/laydanhsachnganh', [MajorsController::class, 'getAllMajors'])->name('major.list');
-//     // Route::post('/suanganhhoc', [MajorsController::class, 'editMajor'])->name('major.edit');
-// });
 
 Route::prefix('/monhoc')->group(function () {
     Route::get('/them-mon-hoc-bang-excel-file', [SubjectsController::class, 'showAddSubjectByExcelFile'])->name('subject_excel.add');
