@@ -1,7 +1,12 @@
 @extends('Layout.Layout')
 
 @section('content')
-    <div class="pt-2 ">
+    {{-- <div class="input-group">
+        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+            aria-label="Upload">
+        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+    </div> --}}
+    <div class="pt-4">
         <div class="input-group px-3">
             <input type="file" class="form-control border-primary" id="readExcelFile_Input">
             {{-- <label class="input-group-text" for="inputGroupFile02">Upload</label> --}}
@@ -219,7 +224,9 @@
                             '');
                     readFileExcelResult = [];
                     // document.getElementById("sendExcelFileData").submit();
-                } else {}
+                } else {
+                    console.log("Code được chạy!");
+                }
             }
 
         }

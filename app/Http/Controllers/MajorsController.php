@@ -16,6 +16,11 @@ class MajorsController extends Controller
         return response()->json($data);
     }
 
+    public function getMajorListByScholastic(Request $request){
+        $result = $this->majors->getMajorListByScholastic($request->all());
+        return response()->json($result);
+    }
+
     public function addMajor(Request $request){
         $result = $this->majors->addMajor($request->all());
         return response()->json($result);

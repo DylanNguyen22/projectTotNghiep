@@ -16,6 +16,12 @@ class MajorsModel extends Model
         return $majors;
     }
 
+    public function getMajorListByScholastic($data){
+        $MaNH = $data['id'];
+        $result = DB::select("SELECT nganh.MaNganh, nganh.TenNganh FROM chitietmonhoc, nganh WHERE nganh.MaNganh = chitietmonhoc.MaNganh AND chitietmonhoc.MaNH = '$MaNH' GROUP BY nganh.MaNganh, nganh.TenNganh");
+        return $result;
+    }
+
     public function addMajor($data)
     {
         $TenNganh = $data['TenNganh'];

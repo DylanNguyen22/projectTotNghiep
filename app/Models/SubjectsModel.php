@@ -18,12 +18,20 @@ class SubjectsModel extends Model
     public function editSubject($data){
         $MaMH = $data['MaMH'];
         $TenMH = $data['TenMH'];
-        DB::select("UPDATE `monhoc` SET `TenMH`='$TenMH' WHERE `MaMH`='$MaMH'");
+        $check = DB::select("SELECT * FROM monhoc WHERE TenMH = '$TenMH'");
+        if($check == null){
+            DB::select("UPDATE `monhoc` SET `TenMH`='$TenMH' WHERE `MaMH`='$MaMH'");
+            return 'success';
+        }else{
+            return 'false';
+        }
+        
     }
 
     public function deleteSubject($data){
         $MaMH = $data['id'];
         DB::select("DELETE FROM `monhoc` WHERE MaMH = $MaMH");
+        return 'success';
     }
 
     public function handleAddSubjectByExcelFile($data)

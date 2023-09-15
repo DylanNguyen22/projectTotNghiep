@@ -52,6 +52,9 @@ Route::prefix('/hocki')->group(function () {
     Route::get('/xoahocki', [SemesterController::class, 'deleteSemester'])->name('semester.delete');
     Route::get('/laydanhsachhocki', [SemesterController::class, 'getAllSemester'])->name('semester.list');
     Route::post('/suahocki', [SemesterController::class, 'editSemester'])->name('semester.edit');
+
+    Route::get('/lay-hoc-ki-theo-nam-hoc', [SemesterController::class, 'getSemesterListByScholastic'])->name('semeterByScholastic.list');
+    Route::get('/lay-hoc-ki-theo-nganh-hoc', [SemesterController::class, 'getSemesterListByMajor'])->name('semeterByMajor.list');
 });
 
 Route::prefix('/nganhhoc')->group(function () {
@@ -59,6 +62,8 @@ Route::prefix('/nganhhoc')->group(function () {
     Route::get('/xoanganhhoc', [MajorsController::class, 'deleteMajor'])->name('major.delete');
     Route::get('/laydanhsachnganh', [MajorsController::class, 'getAllMajors'])->name('major.list');
     Route::post('/suanganhhoc', [MajorsController::class, 'editMajor'])->name('major.edit');
+
+    Route::get('/lay-nganh-hoc-theo-nam-hoc', [MajorsController::class, 'getMajorListByScholastic'])->name('majorByScholastic.list');
 });
 
 Route::prefix('/monhoc')->group(function () {

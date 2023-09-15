@@ -18,41 +18,26 @@ class SemesterController extends Controller
     }
 
     public function editSemester(Request $request){
-        $this->semester->editSemester($request->all());
-        // return response()->json($a);
+        $result = $this->semester->editSemester($request->all());
+        return response()->json($result);
     }
 
     public function addSemester(Request $request){
-        $this->semester->addSemester($request->all());
-        // return response()->json($request);
+        $result = $this->semester->addSemester($request->all());
+        return response()->json($result);
     }
 
     public function deleteSemester(Request $request){
         $this->semester->deleteSemester($request->all());
     }
 
-    // public function getAllSemesterByScholastic(Request $request)
-    // {
-    //     // $data = $this->semester->getAllSemester($request->all()['MaNH']);
-    //     $data = $this->semester->getAllSemesterByScholastic("".$request->all()['MaNH']);
-    //     return response()->json($data);
-    // }
+    public function getSemesterListByScholastic(Request $request){
+        $result = $this->semester->getSemesterListByScholastic($request->all());
+        return response()->json($result);
+    }
 
-    // public function deleteSemesterOutOfScholastic(Request $request)
-    // {
-    //     $result = $this->semester->deleteSemesterOutOfScholastic($request->all());
-    //     return response()->json($result);
-    // }
-
-    // public function getSemesterDetail()
-    // {
-    //     $semesterDetail = $this->semester->getSemesterDetail();
-    //     return response()->json($semesterDetail);
-    // }
-
-    // public function addSemesterToScholastic(Request $request)
-    // {
-    //     $this->semester->addSemesterToScholastic($request->all());
-    //     return response()->json($request);
-    // }
+    public function getSemesterListByMajor(Request $request){
+        $result = $this->semester->getSemesterListByMajor($request->all());
+        return response()->json($result);
+    }
 }

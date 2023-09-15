@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SubjectsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SubjectsController extends Controller
 {
@@ -18,17 +19,18 @@ class SubjectsController extends Controller
     }
 
     public function editSubject(Request $request){
-        $this->subjectsmodel->editSubject($request->all());
-        return response()->json($request);
+        $result = $this->subjectsmodel->editSubject($request->all());
+        return response()->json($result);
     }
 
     public function deleteSubject(Request $request){
-        $this->subjectsmodel->deleteSubject($request);
-        // return response()->json($request->all());
+        $result = $this->subjectsmodel->deleteSubject($request);
+        return response()->json($result);
     }
 
     public function showAddSubjectByExcelFile(){
-        return view("AddSubjectByExcelFile");
+        $TenGV = Session::get('hfre');
+        return view("AddSubjectByExcelFile", compact('TenGV'));
     }
 
     public function handleAddSubjectByExcelFile(Request $request){
