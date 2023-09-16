@@ -1,5 +1,11 @@
 @extends('Layout.Layout')
 
+@section('alert')
+    <div class="alert py-2 alert-success text-center fade" role="alert" id="successAlert">
+        Thao tác thành công !
+    </div>
+@endsection
+
 @section('content')
     <input type="hidden" id="subjectDetailMemory" value="[]">
     <div class="p-4 px-0 d-flex justify-content-between mb-4">
@@ -173,7 +179,8 @@
                 <div class="modal-body d-flex justify-content-around">
                     <button onclick="window.location.href = '/monhoc/them-mon-hoc-bang-excel-file'"
                         class="btn btn-outline-primary">Thêm bằng file excel</button>
-                    <button class="btn btn-outline-primary">Thêm bằng form</button>
+                    <button onclick="window.location.href = '/monhoc/them-mon-hoc-bang-form'"
+                        class="btn btn-outline-primary">Thêm bằng form</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -1980,6 +1987,8 @@
                     setTimeout(function() {
                         document.getElementById("successAlert").classList.remove("show")
                     }, 5000);
+
+                    checkSubjectDetailData();
                 }
             });
 

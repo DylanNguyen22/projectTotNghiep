@@ -69,6 +69,10 @@ Route::prefix('/nganhhoc')->group(function () {
 Route::prefix('/monhoc')->group(function () {
     Route::get('/them-mon-hoc-bang-excel-file', [SubjectsController::class, 'showAddSubjectByExcelFile'])->name('subject_excel.add');
     Route::get('/xu-ly-them-mon-hoc-bang-excel-file', [SubjectsController::class, 'handleAddSubjectByExcelFile'])->name('subject_excel_handle.add');
+
+    Route::get('them-mon-hoc-bang-form', [SubjectsController::class, 'showAddSubjectByForm']);
+    Route::post('xu-ly-them-mon-hoc-bang-form', [SubjectsController::class, 'handleAddSubjectByForm'])->name('subject_form_add.handle');
+
     Route::get('/laydanhsachmonhoc', [SubjectsController::class, 'getAllSubjects'])->name('subject.list');
 
     Route::get('/xoamonhoc', [SubjectsController::class, 'deleteSubject'])->name('subject.delete');

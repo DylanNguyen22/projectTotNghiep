@@ -41,9 +41,7 @@
                 <a href="/dangxuat" class="link-danger text-decoration-none mb-1"> Đăng xuất</a>
             </div>
         </div>
-        <div class="alert py-2 alert-success text-center fade" role="alert" id="successAlert">
-            Thao tác thành công !
-        </div>
+        @yield('alert')
     </div>
 
     <div class="page-content rounded bg-light">

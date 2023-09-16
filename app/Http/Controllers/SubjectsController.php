@@ -37,4 +37,15 @@ class SubjectsController extends Controller
         $this->subjectsmodel->handleAddSubjectByExcelFile($request->all());
         return redirect('/');
     }
+
+    public function showAddSubjectByForm(){
+        $TenGV = Session::get('hfre');
+        return view('AddSubjectByForm', compact('TenGV'));
+    }
+
+    public function handleAddSubjectByForm(Request $request){
+        $result = $this->subjectsmodel->handleAddSubjectByForm($request->all());
+        dd($result);
+        // dd($request->all());
+    }
 }
