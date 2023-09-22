@@ -31,8 +31,43 @@ class SiteModel extends Model
                 return 'saimatkhau';
             }
         }
+    }
 
+    public function getStatisticalData($data)
+    {
+        $MaNH = $data['MaNH'];
+        $MaNganh = $data['MaNganh'];
+        $MaHK = $data['MaHK'];
+        $MaMH = $data['MaMH'];
+        $MaGV = $data['MaGV'];
+        if($MaNganh != 0){
+            $Nganh = " AND chitietmonhoc.MaNganh = $MaNganh";
+        }else{
+            $Nganh = "";
+        }
 
-        // dd($pass);
+        if($MaHK != 0){
+            $HocKi = " AND chitietmonhoc.MaHK = $MaHK";
+        }else{
+            $HocKi = "";
+        }
+
+        if($MaMH != 0){
+            $MonHoc = " AND chitietmonhoc.MaMH = $MaMH";
+        }else{
+            $MonHoc = "";
+        }
+
+        if($MaGV != 0){
+            $GiangVien = " AND chitietmonhoc.MaGV = $MaGV";
+        }else{
+            $GiangVien = "";
+        }
+
+        $result = DB::select("SELECT namhoc.MaNH, namhoc.TenNH, hocki.MaHK, hocki.TenHK, monhoc.MaMH, monhoc.TenMH, nganh.MaNganh, nganh.TenNganh, giangvien.MaGV, giangvien.TenGV FROM namhoc, hocki, nganh, monhoc, giangvien, chitietmonhoc WHERE namhoc.MaNH = chitietmonhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK AND monhoc.MaMH = chitietmonhoc.MaMH AND nganh.MaNganh = chitietmonhoc.MaNganh AND giangvien.MaGV = chitietmonhoc.MaGV
+            $Nganh $HocKi $MonHoc $GiangVien
+        ");
+
+        return $result;
     }
 }

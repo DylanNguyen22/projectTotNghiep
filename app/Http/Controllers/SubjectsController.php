@@ -45,7 +45,7 @@ class SubjectsController extends Controller
 
     public function handleAddSubjectByForm(Request $request){
         $result = $this->subjectsmodel->handleAddSubjectByForm($request->all());
-        dd($result);
+        return response()->json($result);
         // dd($request->all());
     }
 }

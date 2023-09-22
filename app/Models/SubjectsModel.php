@@ -31,7 +31,6 @@ class SubjectsModel extends Model
 
     public function handleAddSubjectByForm($data)
     {
-        // dd($data);
         $availableMajor = $data['availableMajor'];
         $newMajor = $data['newMajor'];
         $availableSubject = $data['availableSubject'];
@@ -50,32 +49,44 @@ class SubjectsModel extends Model
             $availableSubject == "Chọn môn học đã lưu" && $newSubjectName == null && $newSubjectId == null ||
             $availableSubject == "Chọn môn học đã lưu" && $newSubjectId == null ||
             $availableSubject == "Chọn môn học đã lưu" && $newSubjectName == null ||
+            $availableSubject == "Chọn môn học đã lưu" && $newSubjectName == null && $newSubjectId == null ||
             $availableScholastic == "Chọn năm học đã lưu" && $newScholastic == null ||
             $availableSemester == "Chọn học kì đã lưu" && $newSemester == null
         ) {
-            return "Vui lòng kiểm tra và cung cấp đầy đủ dữ liệu để thực hiện thao tác !";
+            return "1";
         } else {
-            // dd("ok");
-            if ($newMajor == null) {
-                $MaNganh = $availableMajor;
-            } else {
-                $MaNganh = DB::table('nganh')->insertGetId([
-                    'TenNganh' => $newMajor,
-                ]);
-            }
-
             if ($newSubjectName == null && $newSubjectId == null) {
                 $MaMH = $availableSubject;
             } else {
-                $MaMH = DB::table('monhoc')->insertGetId([
-                    'MaMH' => $newSubjectId,
-                    'TenMH' => $newSubjectName,
-                ]);
+                $check = DB::select("SELECT * FROM monhoc WHERE MaMH = '$newSubjectId'");
+                if ($check != null) {
+                    return '2';
+                } else {
+                    DB::select("INSERT INTO `monhoc`(`MaMH`, `TenMH`) VALUES ('$newSubjectId','$newSubjectName')");
+                    $MaMH = $newSubjectId;
+                }
+            }
+
+            if ($newMajor == null) {
+                $MaNganh = $availableMajor;
+            } else {
+                $check = DB::select("SELECT * FROM nganh WHERE TenNganh = '$newMajor'");
+                if ($check != null) {
+                    $MaNganh = $check[0]->MaNganh;
+                } else {
+                    $MaNganh = DB::table('nganh')->insertGetId([
+                        'TenNganh' => $newMajor,
+                    ]);
+                }
             }
 
             if ($newScholastic == null) {
                 $MaNH = $availableScholastic;
             } else {
+                $check = DB::select("SELECT * FROM namhoc WHERE TenNH = '$newScholastic'");
+                if ($check != null) {
+                    $MaNH = $check[0]->MaNH;
+                }
                 $MaNH = DB::table('namhoc')->insertGetId([
                     'TenNH' => $newScholastic,
                 ]);
@@ -84,19 +95,30 @@ class SubjectsModel extends Model
             if ($newSemester == null) {
                 $MaHK = $availableSemester;
             } else {
+                $check = DB::select("SELECT * FROM hocki WHERE TenHK = '$newSemester'");
+                if ($check != null) {
+                    $MaHK = $check[0]->MaHK;
+                }
                 $MaHK = DB::table('hocki')->insertGetId([
                     'TenHK' => $newSemester,
                 ]);
             }
+            $check = DB::select("SELECT * FROM `chitietmonhoc` WHERE MaMH = '$MaMH' AND MaNH = '$MaNH' AND MaHK = '$MaHK' AND MaNganh = '$MaNganh'");
+            if ($check != null) {
+                return '3';
+            } else {
+                DB::select("INSERT INTO `chitietmonhoc`(`SoLuongSV`, `SoTinChi`, `MaMH`, `MaHK`, `MaNH`, `MaNganh`, `MaGV`) VALUES ('$SoLuongSV','$TC','$MaMH','$MaHK','$MaNH','$MaNganh','1')");
+                $result = DB::select("SELECT monhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, nganh.TenNganh, hocki.TenHK, namhoc.TenNH, hocki.MaHK, namhoc.MaNH, nganh.MaNganh, chitietmonhoc.MaGV FROM monhoc, hocki, nganh, namhoc, chitietmonhoc WHERE monhoc.MaMH = chitietmonhoc.MaMH AND hocki.MaHK = chitietmonhoc.MaHK AND nganh.MaNganh = chitietmonhoc.MaNganh AND namhoc.MaNH = chitietmonhoc.MaNH AND chitietmonhoc.MaMH = '$MaMH' AND chitietmonhoc.MaNganh = '$MaNganh' AND chitietmonhoc.MaNH = '$MaNH' AND chitietmonhoc.MaHK = '$MaHK'");
+                return $result;
+            }
 
-            dd("$MaNganh, $MaMH, $MaNH, $MaHK, $TC, $SoLuongSV");
         }
     }
 
     public function deleteSubject($data)
     {
         $MaMH = $data['id'];
-        DB::select("DELETE FROM `monhoc` WHERE MaMH = $MaMH");
+        DB::select("DELETE FROM `monhoc` WHERE MaMH = '$MaMH'");
         return 'success';
     }
 

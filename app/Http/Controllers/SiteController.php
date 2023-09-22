@@ -50,5 +50,9 @@ class SiteController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function getStatisticalData(Request $request){
+        $result = $this->site->getStatisticalData($request->all());
+        return response()->json($result);
+    }
 
 }

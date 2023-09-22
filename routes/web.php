@@ -35,6 +35,7 @@ Route::prefix('/')->group(function () {
     Route::post('/dangnhap', [SiteController::class, 'handleLogin'])->name('login.handle');
     Route::get('/dangxuat', [SiteController::class, 'logout']);
 
+    Route::get('/thongke', [SiteController::class, 'getStatisticalData'])->name("getStatistical_handle");
     Route::post('test', [SiteController::class, 'test'])->name('update.data');
 });
 

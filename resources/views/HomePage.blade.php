@@ -74,20 +74,125 @@
         </div>
     </div>
 
-    <div class>
+    <div class="" style="max-height: 388px; overflow: hidden; overflow-y: scroll">
         <form action="{{ route('subjectDetail_lecturer.edit') }}" id="subjectDetailList_container" method="POST">
+            {{-- =========== --}}
             <table class="table table-striped table-bordered text-center" id="subjectDetailTable"></table>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-primary mb-2" type="submit">Xác nhận</button>
-            </div>
+            {{-- =========== --}}
+    </div>
+    <div class="me-3 mt-2">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-outline-primary mb-2" type="submit">Xác nhận</button>
+        </div>
         </form>
     </div>
+    <hr>
+    <div class="">
+        <div class="p-4 px-0 d-flex justify-content-between mb-4">
+            <form id="getStatisticalData_form">
+                <div class="d-flex">
+                    <div class="d-flex justify-content-between me-2">
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary text-light">
+                                Năm học
+                            </span>
+                            <select class="form-select" id="scholasticStatistical_filter" name="MaNH">
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between me-2" style="width: 260px">
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary text-light">
+                                Ngành học
+                            </span>
+                            <select class="form-select" id="majorStatistical_filter" name="MaNganh">
+                                <option value="0" selected>Tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between me-2">
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary text-light">
+                                Học kì
+                            </span>
+                            <select class="form-select" id="semesterStatistical_filter" name="MaHK">
+                                <option value="0" selected>Tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between me-2" style="width: 222px">
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary text-light">
+                                Môn học
+                            </span>
+                            <select class="form-select" id="subjectStatistical_filter" name="MaMH">
+                                <option value="0" selected>Tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between me-2">
+                        <div class="input-group">
+                            <span class="input-group-text bg-primary text-light">
+                                Giảng viên
+                            </span>
+                            <select class="form-select" id="lecturerStatistical_filter" name="MaGV">
+                                <option value="0" selected>Tất cả</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-outline-primary">Lọc</button>
+                    </div>
+
+                </div>
+                {{-- <input type="text" value="0" id="scholasticId_old" name="scholasticId_old">
+                <input type="text" value="0" id="MajorId_old" name="MajorId_old">
+                <input type="text" value="0" id="SemesterId_old" name="SemesterId_old">
+                <input type="text" value="0" id="SubjectId_old" name="SubjectId_old">
+                <input type="text" value="0" id="LecturerId_old" name="LecturerId_old"> --}}
+            </form>
+        </div>
+        <div class="" style="max-height: 388px; overflow: hidden; overflow-y: scroll">
+            <table class="table table-striped table-bordered text-center" id="xport">
+                <thead class="table bg-primary text-light">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã môn</th>
+                        <th>Tên môn</th>
+                        <th>Ngành học</th>
+                        <th>Học kì</th>
+                        <th>Năm học</ th>
+                        <th>Giảng viên</th>
+                        <th>Giờ dạy ??</th>
+                    </tr>
+                </thead>
+                <tbody id="statisticalTable_Body">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-end me-3 mt-2">
+            <button class="btn btn-primary" onclick="exportFile()">Xuất file <ion-icon
+                    name="download"></ion-icon></button>
+        </div>
+        <br>
+        {{-- <span><------------------------Chổ này dùng cho thống kê------------------------></span> --}}
+    </div>
+
+
+
     <div class="modal fade" id="popup1" tabindex="-1" aria-labelledby="popup1Label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="popup1Label">Danh sách năm học</h5>
-                    <div class="alert py-2 alert-danger text-center fade fixed-top" role="alert" id="scolasticFalseAlert">
+                    <div class="alert py-2 alert-danger text-center fade fixed-top" role="alert"
+                        id="scolasticFalseAlert">
                         Năm học đã tồn tại !
                     </div>
                     <div class="alert py-2 alert-success text-center fade fixed-top" role="alert"
@@ -151,12 +256,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" id="semesterSearch" class="form-control"
+                            placeholder="Vui lòng nhập năm học cần tìm" aria-label="Recipient's username"
+                            aria-describedby="button-addon2" onkeyup="searchSemester()">
+                        <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
+                    </div>
                     <form action="" id="addSemesterForm">
                         <div class="input-group mb-3">
                             <input id="addSemesterInput" type="text" class="form-control"
                                 placeholder="Vui lòng nhập tên học kì cần thêm" aria-label="Recipient's username"
                                 aria-describedby="button-addon2" name="TenHK" required maxlength="20">
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Thêm</button>
+                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm</button>
                         </div>
                         @csrf
                     </form>
@@ -204,6 +315,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" id="majorSearch" class="form-control"
+                            placeholder="Vui lòng nhập năm học cần tìm" aria-label="Recipient's username"
+                            aria-describedby="button-addon2" onkeyup="searchMajor()">
+                        <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
+                    </div>
                     <div class="">
                         <form action="{{ route('major.add') }}" id="addMajorForm">
                             @csrf
@@ -216,8 +333,8 @@
                         </form>
                     </div>
                     <div class="">
-                        <table class="table table-striped">
-                            <tbody id="majorListTable_Body"></tbody>
+                        <table class="table table-striped" id="majorListTable_Body">
+                            {{-- <tbody ></tbody> --}}
                         </table>
                     </div>
                 </div>
@@ -244,6 +361,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" id="subjectSearch" class="form-control"
+                            placeholder="Vui lòng nhập năm học cần tìm" aria-label="Recipient's username"
+                            aria-describedby="button-addon2" onkeyup="subjectSearch()">
+                        <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
+                    </div>
                     <table class="table table-striped">
                         <thead id="subjectListTable_head">
                             <tr>
@@ -281,10 +404,11 @@
 
     <script>
         function loadAllData() {
+
             checkScholasticData();
             setTimeout(function() {
                 checkSubjectDetailData();
-            }, 200);
+            }, 400);
             setTimeout(function() {
                 checkSemesterData();
             }, 300);
@@ -295,7 +419,18 @@
                 checkSubjectData();
             }, 700);
         }
+        let intervalId;
 
+        function myFunction() {
+            if (document.getElementById("scholasticFilter").innerHTML != null) {
+                var firstOption = document.querySelector('#scholasticFilter option:first-child').value;
+                getSemesterByScholasticList(firstOption);
+                doStatistical();
+                clearInterval(intervalId); // Ngừng lại khi điều kiện đạt được
+            }
+        }
+
+        intervalId = setInterval(myFunction, 1000);
         loadAllData();
         // document.getElementById("successAlert").style.display = "none";
 
@@ -315,6 +450,80 @@
                         tr[i].style.display = "none";
                     }
                 }
+            }
+        }
+
+        function searchSemester() {
+            const searchInput = document.getElementById('semesterSearch');
+            searchInput.addEventListener('input', filterTable);
+
+            function filterTable() {
+                const searchValue = searchInput.value.toLowerCase();
+                const table = document.getElementById(
+                    'semesterTable'); // Replace 'yourTableId' with the actual ID of your table
+                const rows = table.getElementsByTagName('tr');
+
+                for (let i = 1; i < rows.length; i++) { // Start from index 1 to skip the table header row
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        const cellValue = cells[j].textContent.toLowerCase();
+
+                        if (cellValue.includes(searchValue)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            }
+        }
+
+        function searchMajor() {
+            const searchValue = document.getElementById("majorSearch").value.toLowerCase();
+            const table = document.getElementById(
+                'majorListTable_Body'); // Thay 'majorListTable_Body' bằng ID thực tế của bảng
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cellValue = cells[j].textContent.toLowerCase();
+
+                    if (cellValue.includes(searchValue)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        function subjectSearch() {
+            const searchValue = document.getElementById("subjectSearch").value.toLowerCase();
+            const table = document.getElementById(
+                'subjectListTable_body'); // Thay 'majorListTable_Body' bằng ID thực tế của bảng
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cellValue = cells[j].textContent.toLowerCase();
+
+                    if (cellValue.includes(searchValue)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = found ? '' : 'none';
             }
         }
 
@@ -672,7 +881,8 @@
                                                         },
                                                         5000
                                                     );
-                                                    checkScholasticData();
+                                                    checkScholasticData
+                                                        ();
                                                 } else {
                                                     document
                                                         .getElementById(
@@ -765,6 +975,7 @@
                             // Create the table element
                             var table = document.createElement("table");
                             table.className = "table table-striped";
+                            table.id = "semesterTable";
 
                             // Create the table head (thead) element
                             var thead = document.createElement("thead");
@@ -1207,8 +1418,6 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    // console.log(response);
-
                     if (response ==
                         'success') {
 
@@ -1389,23 +1598,6 @@
                 url: "{{ route('major.list') }}",
                 type: 'GET',
                 success: function(response) {
-                    document.getElementById("majorFilter").innerHTML = "";
-                    var semesterOptionFilter = document.createElement(
-                        "option");
-                    semesterOptionFilter.value = 0;
-                    semesterOptionFilter.textContent = "Tất cả";
-
-                    document.getElementById("majorFilter").appendChild(
-                        semesterOptionFilter);
-                    Object.keys(response).forEach(key => {
-                        var semesterOptionFilter = document.createElement(
-                            "option");
-                        semesterOptionFilter.value = response[key].MaNganh;
-                        semesterOptionFilter.textContent = response[key].TenNganh;
-
-                        document.getElementById("majorFilter").appendChild(
-                            semesterOptionFilter);
-                    });
 
                     document.getElementById("majorListTable_Body").innerHTML = "";
 
@@ -1749,7 +1941,6 @@
                 data: filter,
                 success: function(result) {
                     var number = 0;
-                    // console.log(response);
                     if (document.getElementById("subjectDetailFilterData")) {
                         document.getElementById("subjectDetailFilterData").remove();
                     }
@@ -1957,6 +2148,7 @@
                     input.name = "subjectDetailQuantity";
                     input.value = number;
                     input.id = "subjectDetailQuantity";
+                    input.type = "hidden";
 
                     subjectDetailList_container.appendChild(input);
                 }
@@ -1981,7 +2173,6 @@
                 data: formData,
                 dataType: "json",
                 success: function(response) {
-                    // console.log(response);
                     document.getElementById("successAlert").classList.add("show");
 
                     setTimeout(function() {
@@ -2006,7 +2197,6 @@
                 url: "{{ route('subject.list') }}",
                 type: 'GET',
                 success: function(response) {
-                    // console.log(response);
 
                     var subjectListTable_body = document.getElementById("subjectListTable_body");
                     subjectListTable_body.innerHTML = "";
@@ -2179,8 +2369,6 @@
                                         data: formData,
                                         dataType: "json",
                                         success: function(response) {
-                                            console.log("=======")
-                                            console.log(response)
                                             if (response !=
                                                 'false') {
                                                 document
@@ -2341,18 +2529,14 @@
             });
         }
 
-        setTimeout(function() {
-            var firstOption = document.querySelector('#scholasticFilter option:first-child').value;
-            getSemesterByScholasticList(firstOption);
-        }, 500);
-
         function getSelectedScholasticSemesterList() {
             var defaultOption = document.querySelector('#scholasticFilter option:checked');
             getSemesterByScholasticList(defaultOption.value);
         }
 
         function getSemesterByMajor() {
-            var majorId = document.querySelector('#scholasticFilter option:checked').value;
+            var majorId = document.querySelector('#majorFilter option:checked').value;
+            console.log(majorId);
             $.ajax({
                 url: "{{ route('semeterByMajor.list') }}",
                 type: "GET",
@@ -2380,9 +2564,240 @@
                 }
             });
         }
+        // ============================================
+        // ============================================
+        // ============================================
+        // ============================================
+
+        function doStatistical() {
+            $.ajax({
+                url: "{{ route('scholastic.list') }}",
+                type: 'GET',
+                dataType: "json",
+                success: function(response) {
+                    var select = document.getElementById("scholasticStatistical_filter");
+                    Object.keys(response).forEach(key => {
+                        var option = document.createElement("option");
+                        option.value = response[key].MaNH;
+                        option.textContent = response[key].TenNH;
+                        select.appendChild(option);
+                    });
+
+                    $.ajax({
+                        url: "{{ route('major.list') }}",
+                        type: 'GET',
+                        dataType: "json",
+                        success: function(response) {
+                            var select = document.getElementById("majorStatistical_filter");
+                            Object.keys(response).forEach(key => {
+                                var option = document.createElement("option");
+                                option.value = response[key].MaNganh;
+                                option.textContent = response[key].TenNganh;
+                                select.appendChild(option);
+                            });
+                            $.ajax({
+                                url: "{{ route('semester.list') }}",
+                                type: 'GET',
+                                dataType: "json",
+                                success: function(response) {
+                                    var select = document.getElementById(
+                                        "semesterStatistical_filter");
+                                    Object.keys(response).forEach(key => {
+                                        var option = document.createElement(
+                                            "option");
+                                        option.value = response[key].MaHK;
+                                        option.textContent = response[key]
+                                            .TenHK;
+                                        select.appendChild(option);
+                                    });
+                                    $.ajax({
+                                        url: "{{ route('subject.list') }}",
+                                        type: 'GET',
+                                        dataType: "json",
+                                        success: function(response) {
+                                            var select = document
+                                                .getElementById(
+                                                    "subjectStatistical_filter"
+                                                );
+                                            Object.keys(response).forEach(
+                                                key => {
+                                                    var option =
+                                                        document
+                                                        .createElement(
+                                                            "option");
+                                                    option.value =
+                                                        response[
+                                                            key].MaMH;
+                                                    option.textContent =
+                                                        response[key]
+                                                        .TenMH;
+                                                    select.appendChild(
+                                                        option);
+                                                });
+
+                                            $.ajax({
+                                                url: "{{ route('lecturers.list') }}",
+                                                type: 'GET',
+                                                dataType: "json",
+                                                success: function(
+                                                    response) {
+                                                    var select =
+                                                        document
+                                                        .getElementById(
+                                                            "lecturerStatistical_filter"
+                                                        );
+                                                    Object.keys(
+                                                            response
+                                                        )
+                                                        .forEach(
+                                                            key => {
+                                                                if (response[
+                                                                        key
+                                                                    ]
+                                                                    .MaGV !=
+                                                                    1
+                                                                ) {
+                                                                    var option =
+                                                                        document
+                                                                        .createElement(
+                                                                            "option"
+                                                                        );
+                                                                    option
+                                                                        .value =
+                                                                        response[
+                                                                            key
+                                                                        ]
+                                                                        .MaGV;
+                                                                    option
+                                                                        .textContent =
+                                                                        response[
+                                                                            key
+                                                                        ]
+                                                                        .TenGV;
+                                                                    select
+                                                                        .appendChild(
+                                                                            option
+                                                                        );
+                                                                } else {}
+
+                                                            });
+                                                    var formData =
+                                                        $(
+                                                            '#getStatisticalData_form'
+                                                        )
+                                                        .serialize();
+                                                    $.ajax({
+                                                        url: "{{ route('getStatistical_handle') }}",
+                                                        type: 'GET',
+                                                        data: formData,
+                                                        dataType: "json",
+                                                        success: function(
+                                                            response
+                                                        ) {
+                                                            console
+                                                                .log(
+                                                                    response
+                                                                );
+                                                            setStatisticalData
+                                                                (
+                                                                    response
+                                                                );
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function setStatisticalData(response) {
+            var stt = 1;
+            var table = document.getElementById("statisticalTable_Body");
+            table.innerHTML = "";
+            Object.keys(response).forEach(key => {
+                var tr = document.createElement("tr");
+                var td = document.createElement("td");
+                td.textContent = stt;
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textContent = response[key].MaMH;
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textContent = response[key].TenMH;
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textContent = response[key].TenNganh;
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textContent = response[key].TenHK;
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textContent = response[key].TenNH;
+                tr.appendChild(td);
+
+                var td = document.createElement("td");
+                td.textContent = response[key].TenGV;
+                tr.appendChild(td);
+
+                var ketQuaCuaCongThuc = "Kết quả phép tính";
+
+                var td = document.createElement("td");
+                td.textContent = ketQuaCuaCongThuc;
+                tr.appendChild(td);
+                table.appendChild(tr);
+                stt++;
+            });
+        }
+
+        function getStatisticalData() {
+            // var scholasticId = document.getElementById("scholasticId");
+            // var MajorId = document.getElementById("MajorId");
+            // var semesterId = document.getElementById("SemesterId");
+            // var subjectId = document.getElementById("SubjectId");
+            // var lecturerId = document.getElementById("LectureId");
+
+
+            $('#getStatisticalData_form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: "{{ route('getStatistical_handle') }}",
+                    type: 'GET',
+                    data: formData,
+                    dataType: "json",
+                    success: function(response) {
+                        setStatisticalData(response);
+                    }
+                });
+            });
+
+        }
+
+        getStatisticalData();
     </script>
 
+    {{-- Xử lý xuất file excel --}}
+    <script>
+        function exportFile() {
+            var tbl = document.getElementById("xport");
+            const wb = XLSX.utils.table_to_book(tbl);
+            XLSX.writeFile(wb, "HTMLTable.xlsx");
+        }
+    </script>
 
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/shim.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 @endsection
