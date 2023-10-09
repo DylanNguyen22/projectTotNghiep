@@ -14,4 +14,19 @@ class LecturersController extends Controller
         $lecturersList = $this->lecturers->getLecturersList();
         return response()->json($lecturersList);
     }
+
+    public function editLecturers(Request $request){
+        $result = $this->lecturers->editLecturers($request->all());
+        return response()->json("success"); 
+    }
+
+    public function addLecturers(Request $request){
+        $this->lecturers->addLecturers($request->all());
+        return response()->json("success"); 
+    }
+
+    public function deleteLecturer(Request $request){
+        $this->lecturers->deleteLecturer($request->all());
+        return response()->json($request);
+    }
 }

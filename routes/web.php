@@ -78,6 +78,7 @@ Route::prefix('/monhoc')->group(function () {
 
     Route::get('/xoamonhoc', [SubjectsController::class, 'deleteSubject'])->name('subject.delete');
     Route::post('/suamonhoc', [SubjectsController::class, 'editSubject'])->name('subject.edit');
+    Route::post('/themmonhoc', [SubjectsController::class, 'addSubject'])->name('subject.add');
 });
 
 Route::prefix('/chitietmonhoc')->group(function () {
@@ -87,10 +88,10 @@ Route::prefix('/chitietmonhoc')->group(function () {
 });
 
 Route::prefix('/giangvien')->group(function () {
-    // Route::post('/themnganhhoc', [MajorsController::class, 'addMajor'])->name('major.add');
-    // Route::get('/xoanganhhoc', [MajorsController::class, 'deleteMajor'])->name('major.delete');
+    Route::post('/themgiangvien', [LecturersController::class, 'addLecturers'])->name('lecturers.add');
+    Route::get('/xoagiangvien', [LecturersController::class, 'deleteLecturer'])->name('lecturer.delete');
     Route::get('/laydanhsachgiangvien', [LecturersController::class, 'getLecturersList'])->name('lecturers.list');
-    // Route::post('/suanganhhoc', [MajorsController::class, 'editMajor'])->name('major.edit');
+    Route::post('/suagiangvien', [LecturersController::class, 'editLecturers'])->name('lecturers.edit');
 });
 
 

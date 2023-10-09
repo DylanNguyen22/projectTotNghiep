@@ -18,6 +18,11 @@ class SubjectsController extends Controller
         return response()->json($subjectsList);
     }
 
+    public function addSubject(Request $request){
+        $result = $this->subjectsmodel->addSubject($request->all());
+        return response()->json($result);
+    }
+
     public function editSubject(Request $request){
         $result = $this->subjectsmodel->editSubject($request->all());
         return response()->json($result);

@@ -1,67 +1,84 @@
-<div class="input-group mb-3">
-    <input type="text" id="majorSearch" class="form-control" placeholder="Vui lòng nhập năm học cần tìm"
-        aria-label="Recipient's username" aria-describedby="button-addon2" onkeyup="searchMajor()">
-    <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<table class="table table-striped" id="majorListTable_Body">
-    <tr>
-        <td class="d-flex justify-content-between">
-            <span id="majorName" class="ms-2">Khoa học dữ liệu</span>
-            <div id="majorEditForm" style="display: none;">
-                <form action="http://127.0.0.1:8000/nganhhoc/suanganhhoc" id="editMajorName_Form2">
-                    <div class="input-group mb-3"><input type="text" class="form-control" name="TenNganh"
-                            maxlength="30" aria-label="Recipient's username" aria-describedby="button-addon2"><button
-                            class="btn btn-outline-primary" type="submit" id="button-addon2">Lưu</button></div><input
-                        type="hidden" class="form-control" name="MaNganh" value="2"
-                        aria-label="Recipient's username" aria-describedby="button-addon2"><input type="hidden"
-                        name="_token" value="WVy5wqVdKdHMGi7mrNWHjEFF99id1VgTssea94ki">
-                </form>
-            </div>
-            <div class="me-2"><a href="#" class="btn btn-sm btn-primary me-2" id="editMajorBtn2">Sửa</a><a
-                    href="" id="deleteMajor2" class="btn btn-sm btn-danger">Xóa</a></div>
-        </td>
-    </tr>
-    <tr>
-        <td class="d-flex justify-content-between">
-            <span id="majorName" class="ms-2">Kỹ thuật phần mềm</span>
-            <div id="majorEditForm" style="display: none;">
-                <form action="http://127.0.0.1:8000/nganhhoc/suanganhhoc" id="editMajorName_Form1">
-                    <div class="input-group mb-3"><input type="text" class="form-control" name="TenNganh"
-                            maxlength="30" aria-label="Recipient's username" aria-describedby="button-addon2"><button
-                            class="btn btn-outline-primary" type="submit" id="button-addon2">Lưu</button></div><input
-                        type="hidden" class="form-control" name="MaNganh" value="1"
-                        aria-label="Recipient's username" aria-describedby="button-addon2"><input type="hidden"
-                        name="_token" value="WVy5wqVdKdHMGi7mrNWHjEFF99id1VgTssea94ki">
-                </form>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <div class="me-2"><a href="#" class="btn btn-sm btn-primary me-2" id="editMajorBtn1">Sửa</a><a
-                    href="" id="deleteMajor1" class="btn btn-sm btn-danger">Xóa</a></div>
-        </td>
-    </tr>
-</table>
+</head>
 
-<script>
-    function searchMajor() {
-        const searchValue = document.getElementById("majorSearch").value.toLowerCase();
-  const table = document.getElementById('majorListTable_Body'); // Thay 'majorListTable_Body' bằng ID thực tế của bảng
-  const rows = table.getElementsByTagName('tr');
+<body>
+    <style type="text/css">
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <table class="tg table table-striped table-bordered" id="xport">
+        <tr>
+            <th class="text-uppercase" colspan="13">Thống kê giờ giảng dạy lý thuyết, thực hành năm học ...</th>
+        </tr>
+        <tr>
+            <th class="text-uppercase" colspan="13">Khoa công nghệ thông tin</th>
+        </tr>
+        <tr>
+            <th rowspan="2">Số thứ tự</th>
+            <th rowspan="2">Tên giảng viên</th>  
+            <th colspan="5">Giờ lý thuyết</th>
+            <th colspan="5">Giờ thực hành</th>
+            <th rowspan="2">Tổng cộng</th>
+        </tr>
+        <tr>
+            <th>Học kỳ</th>
+            <th>Số tiết</th>
+            <th>Số SV</th>
+            <th>Hệ số</th>
+            <th>Quy chuẩn ra</th>
+            <th>Học kì</th>
+            <th>Số tín chỉ</th>
+            <th>Số SV</th>
+            <th>Định mức/1sv</th>
+            <th>Quy ra giờ chuẩn</th>
+        </tr>
 
-  for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].getElementsByTagName('td');
-    let found = false;
 
-    for (let j = 0; j < cells.length; j++) {
-      const cellValue = cells[j].textContent.toLowerCase();
+        <tr>
+            <td rowspan="3">1</td>
+            <td rowspan="3">Nguyễn Văn A</td>
+            <td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
+            <td rowspan="3">total</td>
+        </tr>
+        <tr>
+            <td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
+        </tr>
+        <tr>
+            <td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td>
+        </tr>
 
-      if (cellValue.includes(searchValue)) {
-        found = true;
-        break;
-      }
-    }
+    </table>
 
-    rows[i].style.display = found ? '' : 'none';
-  }
-    }
-</script>
+    <button onclick="exportToExcel()">Export to Excel</button>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/shim.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <script src="https://unpkg.com/exceljs/dist/exceljs.min.js"></script>
+    <script>
+        function exportToExcel() {
+            var tbl = document.getElementById("xport");
+            const wb = XLSX.utils.table_to_book(tbl);
+            XLSX.writeFile(wb, "HTMLTable.xlsx");
+        }
+    </script>
+
+</body>
+
+</html>

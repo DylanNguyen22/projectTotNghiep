@@ -14,4 +14,22 @@ class LecturersModel extends Model
         $data = DB::select("SELECT * FROM giangvien");
         return $data;
     }
+
+    public function editLecturers($data){
+        $TenGV = $data['TenGV'];
+        $GioChuan = $data['GioChuan'];
+        $MaGV = $data['MaGV'];
+        DB::select("UPDATE `giangvien` SET `TenGV`='$TenGV',`GioChuan`='$GioChuan' WHERE MaGV = '$MaGV'");
+    }
+
+    public function addLecturers($data){
+        $TenGV = $data['lecturerName'];
+        $GC = $data['GC'];
+        DB::select("INSERT INTO `giangvien`(`TenGV`, `GioChuan`) VALUES ('$TenGV','$GC')");
+    }
+
+    public function deleteLecturer($data){
+        $id = $data['id'];
+        DB::select("DELETE FROM `giangvien` WHERE MaGV = '$id'");
+    }
 }

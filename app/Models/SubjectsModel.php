@@ -16,16 +16,43 @@ class SubjectsModel extends Model
         return $subjectsList;
     }
 
+    public function addSubject($data){
+        $MaMH = $data['subjectId'];
+        $TenMH = $data['subjectName'];
+        $check = DB::select("SELECT * FROM monhoc WHERE MaMH = '$MaMH' OR TenMH = '$TenMH'");
+        if($check){
+            return "false";
+        }else{
+            DB::select("INSERT INTO `monhoc`(`MaMH`, `TenMH`) VALUES ('$MaMH','$TenMH')");
+            return "success";
+        }
+    }
+
     public function editSubject($data)
     {
         $MaMH = $data['MaMH'];
+        $MaMH_hidden = $data['MaMH_hidden'];
         $TenMH = $data['TenMH'];
-        $check = DB::select("SELECT * FROM monhoc WHERE TenMH = '$TenMH'");
+        $TenMH_hidden = $data['TenMH_hidden'];
+
+        if($MaMH != $MaMH_hidden && $TenMH == $TenMH_hidden){
+            $check = DB::select("SELECT * FROM monhoc WHERE MaMH = '$MaMH'");
+            $msg = "Mã môn học đã tồn tại !";
+        }
+        if($MaMH == $MaMH_hidden && $TenMH != $TenMH_hidden){
+            $check = DB::select("SELECT * FROM monhoc WHERE TenMH = '$TenMH'");
+            $msg = "Tên môn học đã tồn tại";
+        }
+        if($MaMH != $MaMH_hidden && $TenMH != $TenMH_hidden || $MaMH == $MaMH_hidden && $TenMH == $TenMH_hidden){
+            $check = DB::select("SELECT * FROM monhoc WHERE MaMH = '$MaMH' OR TenMH = '$TenMH'");
+            $msg = "Mã môn học và tên môn học đã tồn tại !";
+        }
+
         if ($check == null) {
             DB::select("UPDATE `monhoc` SET `TenMH`='$TenMH' WHERE `MaMH`='$MaMH'");
             return 'success';
         } else {
-            return 'false';
+            return $msg;
         }
     }
 
@@ -41,7 +68,8 @@ class SubjectsModel extends Model
         $availableSemester = $data['availableSemester'];
         $newSemester = $data['newSemester'];
 
-        $TC = $data['tc'];
+        $ST = $data['ST'];
+        $TH = $data['TH'];
         $SoLuongSV = $data['studentQuantity'];
 
         if (
@@ -107,8 +135,8 @@ class SubjectsModel extends Model
             if ($check != null) {
                 return '3';
             } else {
-                DB::select("INSERT INTO `chitietmonhoc`(`SoLuongSV`, `SoTinChi`, `MaMH`, `MaHK`, `MaNH`, `MaNganh`, `MaGV`) VALUES ('$SoLuongSV','$TC','$MaMH','$MaHK','$MaNH','$MaNganh','1')");
-                $result = DB::select("SELECT monhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, nganh.TenNganh, hocki.TenHK, namhoc.TenNH, hocki.MaHK, namhoc.MaNH, nganh.MaNganh, chitietmonhoc.MaGV FROM monhoc, hocki, nganh, namhoc, chitietmonhoc WHERE monhoc.MaMH = chitietmonhoc.MaMH AND hocki.MaHK = chitietmonhoc.MaHK AND nganh.MaNganh = chitietmonhoc.MaNganh AND namhoc.MaNH = chitietmonhoc.MaNH AND chitietmonhoc.MaMH = '$MaMH' AND chitietmonhoc.MaNganh = '$MaNganh' AND chitietmonhoc.MaNH = '$MaNH' AND chitietmonhoc.MaHK = '$MaHK'");
+                DB::select("INSERT INTO `chitietmonhoc`(`SoLuongSV`, `SoTiet`, `SoChiTH`, `MaMH`, `MaHK`, `MaNH`, `MaNganh`, `MaGV`) VALUES ('$SoLuongSV','$ST', '$TH', '$MaMH','$MaHK','$MaNH','$MaNganh','1')");
+                $result = DB::select("SELECT monhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTiet, chitietmonhoc.SoChiTH, chitietmonhoc.SoLuongSV, nganh.TenNganh, hocki.TenHK, namhoc.TenNH, hocki.MaHK, namhoc.MaNH, nganh.MaNganh, chitietmonhoc.MaGV FROM monhoc, hocki, nganh, namhoc, chitietmonhoc WHERE monhoc.MaMH = chitietmonhoc.MaMH AND hocki.MaHK = chitietmonhoc.MaHK AND nganh.MaNganh = chitietmonhoc.MaNganh AND namhoc.MaNH = chitietmonhoc.MaNH AND chitietmonhoc.MaMH = '$MaMH' AND chitietmonhoc.MaNganh = '$MaNganh' AND chitietmonhoc.MaNH = '$MaNH' AND chitietmonhoc.MaHK = '$MaHK'");
                 return $result;
             }
 
@@ -155,7 +183,7 @@ class SubjectsModel extends Model
             $subjectData = $arr2[1];
             $subjectData = explode(",", $subjectData);
             $subjectData = array_filter($subjectData, 'strlen');
-            $subjectData = array_chunk($subjectData, 5);
+            $subjectData = array_chunk($subjectData, 6);
             // dd($subjectData);
 
             foreach ($subjectData as $key => $item2) {
@@ -169,11 +197,12 @@ class SubjectsModel extends Model
                     } else {
                         $MaMH = $subjectData[0]->MaMH;
                     }
-                    $SoLuongSV = $item2[4];
-                    $SoTinChi = $item2[3];
+                    $SoLuongSV = $item2[5];
+                    $SoTiet = $item2[3];
+                    $SoChiTH = $item2[4];
                     $subjectDetailData = DB::select("SELECT * FROM `chitietmonhoc` WHERE MaMH = '$MaMH' AND MaHK = '$MaHK' AND MaNH = '$MaNH' AND MaNganh = '$MaNganh'");
                     if (empty($subjectDetailData)) {
-                        DB::select("INSERT INTO `chitietmonhoc` (`SoLuongSV`, `SoTinChi`, `MaMH`, `MaHK`, `MaNH`, `MaNganh`, `MaGV`) VALUES ('$SoLuongSV', '$SoTinChi', '$MaMH', '$MaHK', '$MaNH', '$MaNganh', '1');");
+                        DB::select("INSERT INTO `chitietmonhoc` (`SoLuongSV`, `SoTiet`, `SoChiTH`, `MaMH`, `MaHK`, `MaNH`, `MaNganh`, `MaGV`) VALUES ('$SoLuongSV', '$SoTiet', '$SoChiTH', '$MaMH', '$MaHK', '$MaNH', '$MaNganh', '1');");
                     }
                 }
             }

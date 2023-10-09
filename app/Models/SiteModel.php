@@ -35,11 +35,22 @@ class SiteModel extends Model
 
     public function getStatisticalData($data)
     {
-        $MaNH = $data['MaNH'];
         $MaNganh = $data['MaNganh'];
         $MaHK = $data['MaHK'];
         $MaMH = $data['MaMH'];
         $MaGV = $data['MaGV'];
+        $MaNH = $data['MaNH'];
+
+        // if($data['status'] == 1){
+        //     $MaMH == DB::select("SELECT * FROM namhoc ORDER BY MaNH DESC LIMIT 1");
+        //     $NamHoc = " AND chitietmonhoc.MaNH = $MaMH";
+        // }else{
+        //     $MaNH = $data['MaNH'];
+        //     $NamHoc = " AND chitietmonhoc.MaNH = $MaMH";
+        // }
+
+        // $NamHoc = " AND chitietmonhoc.MaNH = $MaMH";
+
         if($MaNganh != 0){
             $Nganh = " AND chitietmonhoc.MaNganh = $MaNganh";
         }else{
@@ -64,10 +75,13 @@ class SiteModel extends Model
             $GiangVien = "";
         }
 
-        $result = DB::select("SELECT namhoc.MaNH, namhoc.TenNH, hocki.MaHK, hocki.TenHK, monhoc.MaMH, monhoc.TenMH, nganh.MaNganh, nganh.TenNganh, giangvien.MaGV, giangvien.TenGV FROM namhoc, hocki, nganh, monhoc, giangvien, chitietmonhoc WHERE namhoc.MaNH = chitietmonhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK AND monhoc.MaMH = chitietmonhoc.MaMH AND nganh.MaNganh = chitietmonhoc.MaNganh AND giangvien.MaGV = chitietmonhoc.MaGV
-            $Nganh $HocKi $MonHoc $GiangVien
+        $result1 = DB::select("SELECT namhoc.MaNH, namhoc.TenNH, hocki.MaHK, hocki.TenHK, monhoc.MaMH, monhoc.TenMH, nganh.MaNganh, nganh.TenNganh, giangvien.MaGV, giangvien.TenGV, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, chitietmonhoc.SoChiTH FROM namhoc, hocki, nganh, monhoc, giangvien, chitietmonhoc WHERE namhoc.MaNH = chitietmonhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK AND monhoc.MaMH = chitietmonhoc.MaMH AND nganh.MaNganh = chitietmonhoc.MaNganh AND giangvien.MaGV = chitietmonhoc.MaGV AND chitietmonhoc.MaNH = $MaNH
+            $Nganh $HocKi $MonHoc $GiangVien 
         ");
 
+        $result2 = DB::select("SELECT DISTINCT chitietmonhoc.MaGV FROM chitietmonhoc WHERE chitietmonhoc.MaNH = $MaNH");
+        $result3 = DB::select("SELECT * FROM namhoc WHERE MaNH = $MaNH LIMIT 1");
+        $result = [$result1, $result2, $result3];
         return $result;
     }
 }

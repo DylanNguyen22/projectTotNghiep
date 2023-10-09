@@ -14,7 +14,7 @@ class SubjectDetailModel extends Model
     {
         $latestScholasticData = DB::select("SELECT * FROM namhoc ORDER BY MaNH DESC LIMIT 1");
         $MaNH = $latestScholasticData[0]->MaNH;
-        $subjectDetailList = DB::select("SELECT namhoc.TenNH, hocki.TenHK, chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, hocki, giangvien, monhoc, namhoc WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaNH = namhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK");
+        $subjectDetailList = DB::select("SELECT namhoc.TenNH, hocki.TenHK, chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTiet, chitietmonhoc.SoChiTH, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, hocki, giangvien, monhoc, namhoc WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaNH = namhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK");
         return $subjectDetailList;
     }
 
@@ -25,19 +25,19 @@ class SubjectDetailModel extends Model
         $MaHK = $data['semesterId'];
 
         if ($MaNganh != 0 && $MaHK == 0) {
-            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaNganh = $MaNganh");
+            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoChiTH, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaNganh = $MaNganh");
             return $subjectDetailList;
         }
         if ($MaNganh == 0 && $MaHK != 0) {
-            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaHK = $MaHK");
+            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoChiTH, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaHK = $MaHK");
             return $subjectDetailList;
         }
         if ($MaNganh != 0 && $MaHK != 0) {
-            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaNganh = $MaNganh AND chitietmonhoc.MaHK = $MaHK");
+            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoChiTH, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH AND chitietmonhoc.MaNganh = $MaNganh AND chitietmonhoc.MaHK = $MaHK");
             return $subjectDetailList;
         }
         if ($MaNganh == 0 && $MaHK == 0) {
-            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoTinChi, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH");
+            $subjectDetailList = DB::select("SELECT chitietmonhoc.MaMH, monhoc.TenMH, chitietmonhoc.SoChiTH, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, giangvien.TenGV, giangvien.MaGV, chitietmonhoc.MaHK, chitietmonhoc.MaNH, chitietmonhoc.MaNganh FROM chitietmonhoc, monhoc, giangvien WHERE chitietmonhoc.MaMH = monhoc.MaMH AND chitietmonhoc.MaGV = giangvien.MaGV AND chitietmonhoc.MaNH = $MaNH");
             return $subjectDetailList;
         }
     }

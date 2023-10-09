@@ -54,14 +54,16 @@
 
                     <div class="mt-4 d-flex justify-content-end">
                         <div class="input-group mb-3 w-50">
-                            <input type="number" class="form-control w-25" placeholder="Số tín chỉ" aria-label="Username"
-                                aria-describedby="addon-wrapping" name="tc" required>
-                            <span class="input-group-text me-3" id="addon-wrapping">TC</span>
+                            <input type="number" class="form-control w-25" placeholder="Số số tiết" aria-label="Username"
+                                aria-describedby="addon-wrapping" name="ST" required>
+
+                                <input type="number" class="form-control w-25" placeholder="Số chỉ thực hành" aria-label="Username"
+                                aria-describedby="addon-wrapping" name="TH" required>
 
                             <input type="number" class="form-control w-25" placeholder="Số lượng sinh viên"
                                 aria-label="Recipient's username" aria-describedby="button-addon2" name="studentQuantity"
                                 required>
-                            <button class="btn btn-primary" type="submit" id="button-addon2">Button</button>
+                            <button class="btn btn-primary" type="submit" id="button-addon2">&ensp;&ensp;Thêm&ensp;&ensp;</button>
                         </div>
                     </div>
                 </div>
@@ -78,7 +80,8 @@
                     {{-- <th>STT</th> --}}
                     <th>Mã môn</th>
                     <th>Tên môn</th>
-                    <th>Số tín chỉ</th>
+                    <th>Số tiết</th>
+                    <th>Số chỉ thực hành</th>
                     <th>Số lượng sinh viên</th>
                     <th>Ngành học</th>
                     <th>Học kì</th>
@@ -288,7 +291,11 @@
             tr.appendChild(td);
 
             var td = document.createElement("td");
-            td.textContent = response[0].SoTinChi;
+            td.textContent = response[0].SoTiet;
+            tr.appendChild(td);
+
+            var td = document.createElement("td");
+            td.textContent = response[0].SoChiTH;
             tr.appendChild(td);
 
             var td = document.createElement("td");

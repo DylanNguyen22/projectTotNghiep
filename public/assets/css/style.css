@@ -93,3 +93,8 @@ h4 {
 .confirm-analog {
     display: none;
 }
+
+#xport tr th, #xport tr td {
+    text-align: center;
+    vertical-align: middle;
+}

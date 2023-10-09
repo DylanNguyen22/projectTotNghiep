@@ -32,6 +32,7 @@
             if (fileType === "xls" || fileType === "xlsx") {
                 // console.log("OK \n");
                 // console.log(file.name.split('.').pop().toLowerCase());
+                readFileExcelResult = [];
 
                 var reader = new FileReader();
 
@@ -143,11 +144,14 @@
                                 th4.textContent = jsonData[key][3];
                                 var th5 = document.createElement("th");
                                 th5.textContent = jsonData[key][4];
+                                var th6 = document.createElement("th");
+                                th6.textContent = jsonData[key][5];
                                 tr.appendChild(th1);
                                 tr.appendChild(th2);
                                 tr.appendChild(th3);
                                 tr.appendChild(th4);
                                 tr.appendChild(th5);
+                                tr.appendChild(th6);
 
                                 thead.appendChild(tr);
                                 table.appendChild(thead);
@@ -166,11 +170,14 @@
                                     td4.textContent = jsonData[key][3];
                                     var td5 = document.createElement("td");
                                     td5.textContent = jsonData[key][4];
+                                    var td6 = document.createElement("td");
+                                    td6.textContent = jsonData[key][5];
                                     tr.appendChild(td1);
                                     tr.appendChild(td2);
                                     tr.appendChild(td3);
                                     tr.appendChild(td4);
                                     tr.appendChild(td5);
+                                    tr.appendChild(td6);
 
                                     tbody.appendChild(tr);
                                 }
@@ -213,7 +220,7 @@
                 alert("Vui lòng chọn một file!");
                 return false;
             } else {
-                var userConfirmation = confirm("Do you want to run the code?");
+                var userConfirmation = confirm("Vui lòng xác nhận trước khi thực hiện hành động!");
 
                 if (userConfirmation) {
                     console.log("Code được chạy!");
