@@ -1,11 +1,12 @@
 @extends('Layout.Layout')
 
+@section('alert')
+    <div class="alert p-0 alert-danger fade text-center" role="alert" id="false">
+        Vui lòng chọn lớp học có sẳn hoặc nhập lớp học cần thêm !
+    </div>
+@endsection
+
 @section('content')
-    {{-- <div class="input-group">
-        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
-            aria-label="Upload">
-        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
-    </div> --}}
     <div class="pt-4">
         <div class="input-group px-3">
             <input type="file" class="form-control border-primary" id="readExcelFile_Input">
@@ -18,6 +19,17 @@
     </div>
     <div id="submitionSection" class="d-flex justify-content-end pb-2 pe-3">
         <button class="btn btn-secondary">Lưu</button>
+    </div>
+
+    <div class="confirm-analog">
+        <div class="confirm-analog-content">
+            <h4>Thông báo</h4>
+            <p id="confirmMessage"></p>
+            <div class="confirm-analog-buttons">
+                <button id="cancelBtn" class="btn btn-primary me-4">Hủy bỏ</button>
+                <button id="confirmActionBtn" class="btn btn-danger">Xác nhận</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -41,7 +53,9 @@
 
                 form = document.createElement('form');
                 form.action = "/monhoc/xu-ly-them-mon-hoc-bang-excel-file";
-                form.method = "GET"
+                form.method = "GET";
+                form.id = "sendExcelFileData";
+                form.setAttribute("onsubmit", "readFile()");
 
                 input = document.createElement("input");
                 input.id = "excelFileData";
@@ -50,7 +64,7 @@
 
                 var button = document.createElement("button");
                 button.setAttribute("onclick", "readFile()");
-                button.type = "submit";
+                button.type = "button";
                 button.className = "btn btn-primary";
                 button.textContent = "Lưu";
 
@@ -60,12 +74,35 @@
                 var label = document.createElement("label");
                 label.className = "input-group-text bg-primary text-light";
                 label.id = "inputGroupSelect01";
-                label.textContent = "Ngành học";
+                label.textContent = "Lớp học";
 
                 var select = document.createElement("select");
                 select.className = "form-select";
-                select.id = "inputGroupSelect01";
+                select.id = "majorSelect";
                 select.name = "majorId";
+                select.setAttribute("required", "");
+                select.style.width = "250px";
+
+                var input1 = document.createElement("input");
+                input1.className = "form-control";
+                input1.type = "text";
+                input1.name = "newMajor";
+                input1.id = "newMajor";
+                input1.placeholder = "Vui lòng nhập tên lớp học cần thêm";
+                input1.style.width = "300px";
+                input1.maxLength = 30;
+
+                // var csrf_token = document.createElement("input");
+                // csrf_token.setAttribute("type", "hidden");
+                // csrf_token.setAttribute("name", "_token");
+                // csrf_token.setAttribute("value", "{{ csrf_token() }}");
+
+                var option = document.createElement("option");
+                option.value = 0;
+                option.textContent = "Chọn lớp học có sẳn";
+                // option.setAttribute("selected", "");
+
+                select.appendChild(option);
 
                 $.ajax({
                     url: "{{ route('major.list') }}",
@@ -73,19 +110,20 @@
                     success: function(response) {
                         Object.keys(response).forEach(key => {
                             var option = document.createElement("option");
-                            option.value = response[key].MaNganh;
-                            option.textContent = response[key].TenNganh;
+                            option.value = response[key].MaLop;
+                            option.textContent = response[key].TenLop;
 
                             select.appendChild(option);
                         });
                     }
                 })
+
                 div.appendChild(label);
                 div.appendChild(select);
+                div.appendChild(input1);
                 div.appendChild(button);
                 form.appendChild(div);
-
-
+                // form.appendChild(csrf_token);
 
 
 
@@ -215,24 +253,65 @@
         });
 
         function readFile() {
+            var form = document.getElementById("sendExcelFileData");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+            });
+
             var fileInput = document.getElementById("readExcelFile_Input");
             if (fileInput.files.length === 0) {
                 alert("Vui lòng chọn một file!");
                 return false;
             } else {
-                var userConfirmation = confirm("Vui lòng xác nhận trước khi thực hiện hành động!");
+                function showConfirmAnalog(message, callback) {
+                    var confirmAnalog = document.querySelector(
+                        '.confirm-analog');
+                    confirmAnalog.style.display = 'flex';
 
-                if (userConfirmation) {
-                    console.log("Code được chạy!");
+                    var confirmBtn = document.getElementById(
+                        'confirmActionBtn');
+                    confirmBtn.onclick = function() {
+                        callback();
+                        confirmAnalog.style.display =
+                            'none';
+                    };
 
-                    console.log(JSON.stringify(readFileExcelResult));
-                    document.getElementById("excelFileData").value = JSON.stringify(readFileExcelResult)
-                        .replace(/["\[\]]/g,
-                            '');
-                    readFileExcelResult = [];
-                    // document.getElementById("sendExcelFileData").submit();
+                    var cancelBtn = document.getElementById(
+                        'cancelBtn');
+                    cancelBtn.onclick = function() {
+                        confirmAnalog.style.display =
+                            'none';
+                    };
+
+                    var confirmMessage = document
+                        .getElementById('confirmMessage');
+                    confirmMessage.innerText = message;
+                }
+
+                var selectElement = document.getElementById("majorSelect");
+                var selectedValue = selectElement.value;
+                var newMajor = document.getElementById("newMajor").value;
+
+                // Use the selected value
+
+                if (selectedValue == 0 && newMajor == "") {
+                    document.getElementById("false").classList.add("show");
+
+                    setTimeout(
+                        function() {
+                            document.getElementById("false").classList.remove("show")
+                        }, 5000);
                 } else {
-                    console.log("Code được chạy!");
+                    console.log(newMajor);
+                    showConfirmAnalog(
+                        "Vui lòng xác nhận trước khi thêm !",
+                        function() {
+                            document.getElementById("excelFileData").value = JSON.stringify(readFileExcelResult)
+                                .replace(/["\[\]]/g,
+                                    '');
+                            document.getElementById("sendExcelFileData").submit();
+                            readFileExcelResult = [];
+                        });
                 }
             }
 

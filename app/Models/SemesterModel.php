@@ -39,8 +39,8 @@ class SemesterModel extends Model
 
     public function getSemesterListByMajor($data)
     {
-        $MaNganh = $data['id'];
-        $result = DB::select("SELECT hocki.MaHK, hocki.TenHK FROM chitietmonhoc, nganh, hocki WHERE nganh.MaNganh = chitietmonhoc.MaNganh AND hocki.MaHK = chitietmonhoc.MaHK AND chitietmonhoc.MaNganh = '$MaNganh' GROUP BY hocki.MaHK, hocki.TenHK");
+        $MaLop = $data['id'];
+        $result = DB::select("SELECT hocki.MaHK, hocki.TenHK FROM chitietmonhoc, lop, hocki WHERE lop.MaLop = chitietmonhoc.MaLop AND hocki.MaHK = chitietmonhoc.MaHK AND chitietmonhoc.MaLop = '$MaLop' GROUP BY hocki.MaHK, hocki.TenHK");
         return $result;
     }
 

@@ -9,7 +9,7 @@
 @section('content')
     <input type="hidden" id="subjectDetailMemory" value="[]">
     <div class="pt-4 px-0 d-flex justify-content-between mb-4">
-        <form action="{{ route('subject_detail.list') }}" method="GET" id="subjectDetailFiler_form">
+        <form class="w-100" action="{{ route('subject_detail.list') }}" method="GET" id="subjectDetailFiler_form">
             <div class="d-flex">
                 <div class="d-flex justify-content-between me-2">
                     <div class="input-group">
@@ -25,7 +25,7 @@
                 <div class="d-flex justify-content-between me-2">
                     <div class="input-group">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#popup4">
-                            Ngành học
+                            Lớp học
                         </button>
                         <select class="form-select" name="majorId" id="majorFilter" onchange="getSemesterByMajor()">
                             <option value="0" selected>Tất cả</option>
@@ -48,6 +48,9 @@
                     <button type="submit" class="btn btn-outline-primary">Lọc</button>
                 </div>
 
+                <button class="ms-auto btn btn-primary" type="button" data-bs-toggle="modal"data-bs-target="#popup7">Quản
+                    lý tài
+                    khoản</button>
             </div>
         </form>
     </div>
@@ -55,7 +58,7 @@
     <div class="d-flex w-100 mb-2">
         <div class="me-2">
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#popup3">
-                Thêm môn học
+                Thêm chi tiết môn học
             </button>
         </div>
 
@@ -66,8 +69,9 @@
 
         <div class="">
             <div class="input-group">
-                <input type="text" id="searchSubjectDetailTable" class="form-control" placeholder=""
-                    aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <input type="text" style="width: 265px;" id="searchSubjectDetailTable" class="form-control"
+                    placeholder="Vui lòng nhập thông tin cần tìm..." aria-label="Example text with button addon"
+                    aria-describedby="button-addon1">
                 <span class="input-group-text bg-primary text-light" id="basic-addon2"><ion-icon
                         name="search"></ion-icon></span>
             </div>
@@ -107,9 +111,9 @@
                         <div class="input-group">
                             <button class="input-group-text btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#popup4">
-                                Ngành học
+                                Lớp học
                             </button>
-                            <select class="form-select" id="majorStatistical_filter" name="MaNganh">
+                            <select class="form-select" id="majorStatistical_filter" name="MaLop">
                                 <option value="0" selected>Tất cả</option>
                             </select>
                         </div>
@@ -164,7 +168,7 @@
         </div>
         <div class="input-group w-25 mb-3">
             <input type="text" id="statisticalSearch" class="form-control"
-                placeholder="Vui lòng nhập năm học cần tìm" aria-label="Recipient's username"
+                placeholder="Vui lòng nhập tên giảng viên cần tìm" aria-label="Recipient's username"
                 aria-describedby="button-addon2" onkeyup="searchStatistical()">
             <span class="input-group-text bg-primary text-light" id="basic-addon2"><ion-icon
                     name="search"></ion-icon></span>
@@ -291,7 +295,7 @@
                             <input id="addSemesterInput" type="text" class="form-control"
                                 placeholder="Vui lòng nhập tên học kì cần thêm" aria-label="Recipient's username"
                                 aria-describedby="button-addon2" name="TenHK" required maxlength="20">
-                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm</button>
+                            <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm +</button>
                         </div>
                         @csrf
                     </form>
@@ -308,7 +312,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="popup3Label">Thêm môn học</h5>
+                    <h5 class="modal-title" id="popup3Label">Thêm chi tiết môn học</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-around">
@@ -328,9 +332,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="popup4Label">Danh sách ngành học</h5>
+                    <h5 class="modal-title" id="popup4Label">Danh sách lớp học</h5>
                     <div class="alert py-2 alert-danger text-center fade fixed-top" role="alert" id="majorFalseAlert">
-                        Ngành học đã tồn tại !
+                        Lớp học đã tồn tại !
                     </div>
                     <div class="alert py-2 alert-success text-center fade fixed-top z-index-2" role="alert"
                         id="majorSuccessAlert">
@@ -341,7 +345,7 @@
                 <div class="modal-body">
                     <div class="input-group mb-3">
                         <input type="text" id="majorSearch" class="form-control"
-                            placeholder="Vui lòng nhập ngành học cần tìm" aria-label="Recipient's username"
+                            placeholder="Vui lòng nhập lớp học cần tìm" aria-label="Recipient's username"
                             aria-describedby="button-addon2" onkeyup="searchMajor()">
                         <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
                     </div>
@@ -350,9 +354,9 @@
                             @csrf
                             <div class="input-group mb-3">
                                 <input id="addMajorName_input" type="text" class="form-control"
-                                    placeholder="Vui lòng nhập nghành học cần thêm" aria-label="Recipient's username"
-                                    aria-describedby="button-addon2" name="TenNganh" maxlength="30" required>
-                                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm</button>
+                                    placeholder="Vui lòng nhập lớp học cần thêm" aria-label="Recipient's username"
+                                    aria-describedby="button-addon2" name="TenLop" maxlength="30" required>
+                                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm +</button>
                             </div>
                         </form>
                     </div>
@@ -398,7 +402,7 @@
                                     placeholder="Vui lòng nhập mã môn học" name="subjectId" id="subjectId" required>
                                 <input type="text" class="form-control w-50" maxlength="100" required
                                     placeholder="Vui lòng nhập tên môn học" name="subjectName" id="subjectName">
-                                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm</button>
+                                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm +</button>
                             </div>
                             @csrf
                         </form>
@@ -427,7 +431,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="popup1Label">Danh sách năm học</h5>
+                    <h5 class="modal-title" id="popup1Label">Danh sách giảng viên</h5>
                     <div class="alert py-2 alert-success text-center fade fixed-top" role="alert"
                         id="lecturersSuccessAlert">
                         Thao tác thành công !
@@ -446,7 +450,7 @@
                         <form action="" id="addLecturersForm">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="addScholasticInput" name="lecturerName"
-                                    placeholder="Vui lòng giảng viên cần thêm" aria-label="Recipient's username"
+                                    placeholder="Vui lòng nhập tên giảng viên cần thêm" aria-label="Recipient's username"
                                     maxlength="35" aria-describedby="button-addon2" required>
                                 <input type="text" class="form-control" id="addScholasticInput" name="GC"
                                     placeholder="Vui lòng nhập giờ chuẩn" aria-label="Recipient's username"
@@ -465,6 +469,73 @@
                                     </tr>
                                 </thead>
                                 <tbody id="lecturersTableBody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="data-container"></div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="popup7" tabindex="-1" aria-labelledby="popup1Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popup1Label">Danh sách tài khoản</h5>
+                    <div class="alert py-2 alert-success text-center fade fixed-top" role="alert"
+                        id="accountSuccessAlert">
+                        Thao tác thành công !
+                    </div>
+                    <div class="alert py-2 alert-danger text-center fade fixed-top" role="alert"
+                        id="accountFalseAlert">
+                        Vui lòng chọn giảng viên sở hữu tài khoản cần tạo
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" id="accountSearch" class="form-control"
+                            placeholder="Vui lòng nhập thông tin tài khoản cần tìm" aria-label="Recipient's username"
+                            aria-describedby="button-addon2" onkeyup="accountSearch()">
+                        <span class="input-group-text" id="basic-addon2"><ion-icon name="search"></ion-icon></span>
+                    </div>
+
+                    <div class="">
+                        <form action="" id="addAccountForm">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="accountName"
+                                    placeholder="Vui lòng nhập tên đăng nhập" aria-label="Recipient's username"
+                                    maxlength="20" aria-describedby="button-addon2" required>
+                                <input type="text" class="form-control" name="password" autocomplete="off"
+                                    placeholder="Vui lòng nhập mật khẩu" aria-label="Recipient's username" maxlength="20"
+                                    aria-describedby="button-addon2" required>
+                                <select class="form-select" id="selectLecturesId" name="MaGV"
+                                    aria-label="Default select example">
+                                    <option value="0" selected>Tài khoản thuộc giảng viên ?</option>
+                                </select>
+                                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Thêm +</button>
+                                @csrf
+                            </div>
+                        </form>
+                    </div>
+
+                    <form action="">
+                        <div class="">
+                            <table id="lecturersTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Chủ tài khoản</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accountsTableBody">
 
                                 </tbody>
                             </table>
@@ -631,6 +702,7 @@
                 url: '{{ route('scholastic.add') }}',
                 data: formData,
                 success: function(response) {
+                    console.log(response);
                     if (response.message != 'false') {
                         document.getElementById("addScholasticInput").value = "";
                         document
@@ -1666,7 +1738,7 @@
                         var span = document.createElement("span");
                         span.id = "majorName";
                         span.className = "ms-2";
-                        span.textContent = response[key].TenNganh;
+                        span.textContent = response[key].TenLop;
 
                         // Create the second <div> element inside the first <div>
                         var div2 = document.createElement("div");
@@ -1676,7 +1748,7 @@
                         // Create the <form> element inside the second <div>
                         var form = document.createElement("form");
                         form.action = "{{ route('major.edit') }}";
-                        form.id = "editMajorName_Form" + response[key].MaNganh;
+                        form.id = "editMajorName_Form" + response[key].MaLop;
 
                         // Create the <div> element inside the <form>
                         var div3 = document.createElement("div");
@@ -1686,17 +1758,17 @@
                         var input = document.createElement("input");
                         input.type = "text";
                         input.className = "form-control";
-                        input.name = "TenNganh";
+                        input.name = "TenLop";
                         input.maxLength = 30;
-                        input.value = response[key].TenNganh;
+                        input.value = response[key].TenLop;
                         input.setAttribute("aria-label", "Recipient's username");
                         input.setAttribute("aria-describedby", "button-addon2");
 
                         var input2 = document.createElement("input");
                         input2.type = "hidden";
                         input2.className = "form-control";
-                        input2.name = "MaNganh";
-                        input2.value = response[key].MaNganh;
+                        input2.name = "MaLop";
+                        input2.value = response[key].MaLop;
                         input2.setAttribute("aria-label", "Recipient's username");
                         input2.setAttribute("aria-describedby", "button-addon2");
 
@@ -1744,13 +1816,13 @@
                         var a1 = document.createElement("a");
                         a1.href = "#";
                         a1.className = "btn btn-sm btn-primary me-2";
-                        a1.id = "editMajorBtn" + response[key].MaNganh;
+                        a1.id = "editMajorBtn" + response[key].MaLop;
                         a1.textContent = "Sửa";
 
                         // Create the second <a> element inside the second <div>
                         var a2 = document.createElement("a");
                         a2.href = "";
-                        a2.id = "deleteMajor" + response[key].MaNganh;
+                        a2.id = "deleteMajor" + response[key].MaLop;
                         a2.className = "btn btn-sm btn-danger";
                         a2.textContent = "Xóa";
 
@@ -1801,11 +1873,11 @@
 
                                 event.preventDefault();
                                 showConfirmAnalog(
-                                    "Bạn có chắc là muốn xóa ngành '" +
-                                    response[key].TenNganh + "' không?",
+                                    "Bạn có chắc là muốn xóa lớp '" +
+                                    response[key].TenLop + "' không?",
                                     function() {
-                                        var url = "/nganhhoc/xoanganhhoc?id=" +
-                                            response[key].MaNganh;
+                                        var url = "/lophoc/xoalophoc?id=" +
+                                            response[key].MaLop;
                                         axios.get(url)
                                             .then(function(response) {
                                                 reloadStatisticalData();
@@ -1825,7 +1897,7 @@
                             });
 
                         // document.getElementById("deleteMajor" + response[key]
-                        //     .MaNganh).addEventListener("click", function(
+                        //     .MaLop).addEventListener("click", function(
                         //     event) {
                         //     event.preventDefault();
                         //     if (confirm(
@@ -1840,7 +1912,7 @@
 
                         // Get the "Sửa" link element
                         var editMajorBtn = document.getElementById("editMajorBtn" + response[key]
-                            .MaNganh);
+                            .MaLop);
 
                         // Add click event listener to the "Sửa" link
                         editMajorBtn.addEventListener('click', function(event) {
@@ -1853,7 +1925,7 @@
                                 span.style.display = "none";
 
                                 $(document).ready(function() {
-                                    $('#editMajorName_Form' + response[key].MaNganh)
+                                    $('#editMajorName_Form' + response[key].MaLop)
                                         .submit(function(event) {
                                             event
                                                 .preventDefault(); // Prevent default form submission
@@ -1970,12 +2042,12 @@
         // 0000000000000000000000000000
         // 0000000000000000000000000000
         function checklecturersData() {
+            addOptionToSelectAccount();
             $.ajax({
                 url: "{{ route('lecturers.list') }}",
                 type: "GET",
                 dataType: "json",
                 success: function(result) {
-                    console.log(result);
                     var table = document.getElementById("lecturersTableBody");
                     table.innerHTML = "";
                     Object.keys(result).forEach(key => {
@@ -2385,7 +2457,7 @@
                                 "option");
                             option.value = lecturers[keys].MaGV +
                                 "," + response[key].MaMH + "," + response[key].MaHK + "," +
-                                response[key].MaNH + "," + response[key].MaNganh;
+                                response[key].MaNH + "," + response[key].MaLop;
                             option.textContent = lecturers[keys].TenGV;
                             if (lecturers[keys].MaGV ==
                                 response[key]
@@ -2445,14 +2517,12 @@
 
                                 event.preventDefault();
                                 showConfirmAnalog(
-                                    "Bạn có chắc là muốn xóa môn học '" +
-                                    response[key].TenMH + "' thuộc học kì '" + response[key]
-                                    .TenHK + "', năm học '" + response[key].TenNH + "' không?",
+                                    "Bạn có chắc là muốn xóa chi tiết môn học này không?",
                                     function() {
                                         var url = "/chitietmonhoc/xoachitietmonhoc?id=" +
                                             response[key].MaMH + "," + response[key].MaHK +
                                             "," +
-                                            response[key].MaNH + "," + response[key].MaNganh +
+                                            response[key].MaNH + "," + response[key].MaLop +
                                             "," +
                                             response[key].MaGV;
                                         axios.get(url)
@@ -2929,8 +2999,8 @@
                     Object.keys(response).forEach(key => {
                         var semesterOptionFilter = document.createElement(
                             "option");
-                        semesterOptionFilter.value = response[key].MaNganh;
-                        semesterOptionFilter.textContent = response[key].TenNganh;
+                        semesterOptionFilter.value = response[key].MaLop;
+                        semesterOptionFilter.textContent = response[key].TenLop;
 
                         document.getElementById("majorFilter").appendChild(
                             semesterOptionFilter);
@@ -3010,8 +3080,8 @@
                             select.appendChild(option);
                             Object.keys(response).forEach(key => {
                                 var option = document.createElement("option");
-                                option.value = response[key].MaNganh;
-                                option.textContent = response[key].TenNganh;
+                                option.value = response[key].MaLop;
+                                option.textContent = response[key].TenLop;
                                 select.appendChild(option);
                             });
                             $.ajax({
@@ -3474,7 +3544,365 @@
                 }
             }
         }
+
+        function checkAccountData() {
+            var accountsTable = document.getElementById("accountsTableBody");
+            accountsTable.innerHTML = '';
+            $.ajax({
+                url: "{{ route('accounts.list') }}",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    var selectLecturesId = document.getElementById("selectLecturesId");
+                    Object.keys(result).forEach(key => {
+                        var tr = document.createElement("tr");
+
+                        var td = document.createElement("td");
+                        td.textContent = result[key]['TenDangNhap'];
+                        tr.appendChild(td);
+
+                        var td = document.createElement("td");
+                        td.classList = "d-flex justify-content-between";
+
+                        var span = document.createElement("span");
+                        span.textContent = result[key]['TenGV'];
+                        td.appendChild(span);
+
+                        var passwordInput = document.createElement("input");
+                        passwordInput.classList = "form-control";
+                        passwordInput.name = "newPass";
+                        passwordInput.setAttribute('placeholder', 'Vui lòng nhập mật khẩu mới');
+
+                        var csrfInput = document.createElement('input');
+                        csrfInput.setAttribute('type', 'hidden');
+                        csrfInput.setAttribute('name', '_token');
+                        csrfInput.setAttribute('value',
+                            '{{ csrf_token() }}');
+
+                        var saveButton = document.createElement("button");
+                        saveButton.className = "btn btn-primary";
+                        saveButton.type = "submit";
+                        saveButton.id = "button-addon2";
+                        saveButton.textContent = "Lưu";
+
+                        var input_group = document.createElement("div");
+                        input_group.classList = "input-group";
+
+                        input_group.appendChild(passwordInput);
+                        input_group.appendChild(csrfInput);
+                        input_group.appendChild(saveButton);
+
+                        var hidden_input = document.createElement("input");
+                        hidden_input.value = result[key]['MaTK'];
+                        hidden_input.type = 'hidden';
+                        hidden_input.name = "hidden";
+
+                        var form = document.createElement("form");
+                        form.classList = "w-100";
+                        form.id = "changePass" + key;
+                        form.appendChild(hidden_input);
+                        form.appendChild(input_group);
+
+                        var divContentForm = document.createElement("div");
+                        divContentForm.style.display = "none";
+                        divContentForm.classList = "w-50";
+                        divContentForm.appendChild(form);
+
+                        td.appendChild(divContentForm);
+
+                        var div = document.createElement("div");
+                        div.classList = "d-flex";
+
+                        var xoaTK = document.createElement('a');
+                        xoaTK.textContent = "Xóa";
+                        xoaTK.classList = ("btn btn-sm btn-danger me-2");
+
+                        div.appendChild(xoaTK);
+
+                        var doiMK = document.createElement('a');
+                        doiMK.textContent = "Đổi mật khẩu";
+                        doiMK.classList = ("btn btn-sm btn-primary");
+                        div.appendChild(doiMK);
+
+                        td.appendChild(div);
+
+                        tr.appendChild(td);
+
+                        accountsTable.appendChild(tr);
+
+                        function showConfirmAnalog(message, callback) {
+                            var confirmAnalog = document.querySelector(
+                                '.confirm-analog');
+                            confirmAnalog.style.display = 'flex';
+
+                            var confirmBtn = document.getElementById(
+                                'confirmActionBtn');
+                            confirmBtn.onclick = function() {
+                                callback();
+                                confirmAnalog.style.display =
+                                    'none';
+                            };
+
+                            var cancelBtn = document.getElementById(
+                                'cancelBtn');
+                            cancelBtn.onclick = function() {
+                                confirmAnalog.style.display =
+                                    'none';
+                            };
+
+                            var confirmMessage = document
+                                .getElementById('confirmMessage');
+                            confirmMessage.innerText = message;
+                        }
+
+                        xoaTK.addEventListener('click',
+                            function() {
+
+                                event.preventDefault();
+                                showConfirmAnalog(
+                                    "Bạn có chắc là muốn xóa tài khoản '" +
+                                    result[key]['TenDangNhap'] + "' của giảng viên '" + result[
+                                        key]['TenGV'] +
+                                    "' không?",
+                                    function() {
+                                        var url =
+                                            "/taikhoan/xoataikhoan?id=" +
+                                            result[key]['MaTK'];
+                                        axios.get(url)
+                                            .then(function(
+                                                response) {
+                                                console.log(response);
+                                                if (response.data == "success") {
+                                                    checkAccountData();
+                                                    document
+                                                        .getElementById(
+                                                            "accountFalseAlert"
+                                                        ).classList
+                                                        .remove("show")
+
+                                                    document
+                                                        .getElementById(
+                                                            "accountSuccessAlert"
+                                                        )
+                                                        .classList
+                                                        .add(
+                                                            "show"
+                                                        );
+
+                                                    setTimeout(
+                                                        function() {
+                                                            document
+                                                                .getElementById(
+                                                                    "accountSuccessAlert"
+                                                                )
+                                                                .classList
+                                                                .remove(
+                                                                    "show"
+                                                                )
+                                                        },
+                                                        5000
+                                                    );
+                                                }
+
+                                            })
+                                    });
+                            });
+                        doiMK.addEventListener('click', function(event) {
+                            event.preventDefault();
+
+                            if (divContentForm.style.display === "none") {
+                                // Hiển thị div và ẩn span
+                                divContentForm.style.display = "block";
+                                span.style.display = "none";
+
+                                $("#changePass" + key).on('submit',
+                                    function(e) {
+                                        e.preventDefault();
+                                        divContentForm.style.display = "none";
+                                        span.style.display = "block";
+                                        var formData = $(this).serialize();
+                                        $.ajax({
+                                            url: "{{ route('account.changePassword') }}",
+                                            type: 'POST',
+                                            data: formData,
+                                            dataType: "json",
+                                            success: function(response) {
+                                                console.log(response);
+
+                                                if (response == "success") {
+                                                    document
+                                                        .getElementById(
+                                                            "accountFalseAlert"
+                                                        ).classList
+                                                        .remove("show")
+
+                                                    document
+                                                        .getElementById(
+                                                            "accountSuccessAlert"
+                                                        )
+                                                        .classList
+                                                        .add(
+                                                            "show"
+                                                        );
+
+                                                    setTimeout(
+                                                        function() {
+                                                            document
+                                                                .getElementById(
+                                                                    "accountSuccessAlert"
+                                                                )
+                                                                .classList
+                                                                .remove(
+                                                                    "show"
+                                                                )
+                                                        },
+                                                        5000
+                                                    );
+                                                }
+                                            }
+                                        });
+                                    });
+
+
+                            } else {
+                                divContentForm.style.display = "none";
+                                span.style.display = "block";
+                            }
+                        })
+                    });
+                }
+            });
+        }
+
+        checkAccountData();
+
+        function accountSearch() {
+            const searchValue = document.getElementById("accountSearch").value.toLowerCase();
+            const table = document.getElementById(
+                'accountsTableBody'); // Thay 'majorListTable_Body' bằng ID thực tế của bảng
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cellValue = cells[j].textContent.toLowerCase();
+
+                    if (cellValue.includes(searchValue)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        $('#addAccountForm').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            var selectLecturesId = document.getElementById("selectLecturesId");
+            var selectedValue = selectLecturesId.value;
+            if (selectedValue == 0) {
+                document
+                    .getElementById(
+                        "accountSuccessAlert"
+                    ).classList
+                    .remove("show")
+
+                document
+                    .getElementById(
+                        "accountFalseAlert"
+                    )
+                    .classList
+                    .add(
+                        "show"
+                    );
+
+                setTimeout(
+                    function() {
+                        document
+                            .getElementById(
+                                "accountFalseAlert"
+                            )
+                            .classList
+                            .remove(
+                                "show"
+                            )
+                    },
+                    5000
+                );
+            } else {
+                $.ajax({
+                    url: "{{ route('account.add') }}",
+                    type: 'POST',
+                    data: formData,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response == "success") {
+                            checkAccountData();
+                            document
+                                .getElementById(
+                                    "accountFalseAlert"
+                                ).classList
+                                .remove("show")
+
+                            document
+                                .getElementById(
+                                    "accountSuccessAlert"
+                                )
+                                .classList
+                                .add(
+                                    "show"
+                                );
+
+                            setTimeout(
+                                function() {
+                                    document
+                                        .getElementById(
+                                            "accountSuccessAlert"
+                                        )
+                                        .classList
+                                        .remove(
+                                            "show"
+                                        )
+                                },
+                                5000
+                            );
+                        }
+                    }
+                });
+            }
+        });
+
+        function addOptionToSelectAccount() {
+            var selectLecturesId = document.getElementById("selectLecturesId");
+            selectLecturesId.innerHTML = '';
+            var option = document.createElement("option");
+            option.value = '0';
+            option.textContent = "Vui lòng chọn giảng viên sở hữu";
+            selectLecturesId.appendChild(option);
+            $.ajax({
+                url: "{{ route('lecturers.list') }}",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    // console.log(result)
+                    Object.keys(result).forEach(key => {
+                        if (result[key].TenGV != 'Trống') {
+                            var option = document.createElement("option");
+                            option.value = result[key]['MaGV'];
+                            option.textContent = result[key]['TenGV'];
+                            selectLecturesId.appendChild(option);
+                        }
+                    });
+                }
+            });
+        };
+
     </script>
+
 
     {{-- Xử lý xuất file excel --}}
     <script>

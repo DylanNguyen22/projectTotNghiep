@@ -21,10 +21,8 @@ class ScholasticModel extends Model
     {
         $scholastics = DB::select("SELECT * FROM namhoc WHERE TenNH = '$data'");
         if ($scholastics == null) {
-            $MaNH = DB::table('NamHoc')->insertGetId([
-                'TenNH' => $data,
-            ]);
-            return "$MaNH";
+            DB::select("INSERT INTO `namhoc`(`TenNH`) VALUES ('$data')");
+            return 'success';
         } else {
             return "Năm học đã tồn tại";
         }

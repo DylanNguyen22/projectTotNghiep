@@ -35,7 +35,7 @@ class SiteModel extends Model
 
     public function getStatisticalData($data)
     {
-        $MaNganh = $data['MaNganh'];
+        $MaLop = $data['MaLop'];
         $MaHK = $data['MaHK'];
         $MaMH = $data['MaMH'];
         $MaGV = $data['MaGV'];
@@ -51,10 +51,10 @@ class SiteModel extends Model
 
         // $NamHoc = " AND chitietmonhoc.MaNH = $MaMH";
 
-        if($MaNganh != 0){
-            $Nganh = " AND chitietmonhoc.MaNganh = $MaNganh";
+        if($MaLop != 0){
+            $Lop = " AND chitietmonhoc.MaLop = $MaLop";
         }else{
-            $Nganh = "";
+            $Lop = "";
         }
 
         if($MaHK != 0){
@@ -75,8 +75,8 @@ class SiteModel extends Model
             $GiangVien = "";
         }
 
-        $result1 = DB::select("SELECT namhoc.MaNH, namhoc.TenNH, hocki.MaHK, hocki.TenHK, monhoc.MaMH, monhoc.TenMH, nganh.MaNganh, nganh.TenNganh, giangvien.MaGV, giangvien.TenGV, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, chitietmonhoc.SoChiTH FROM namhoc, hocki, nganh, monhoc, giangvien, chitietmonhoc WHERE namhoc.MaNH = chitietmonhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK AND monhoc.MaMH = chitietmonhoc.MaMH AND nganh.MaNganh = chitietmonhoc.MaNganh AND giangvien.MaGV = chitietmonhoc.MaGV AND chitietmonhoc.MaNH = $MaNH
-            $Nganh $HocKi $MonHoc $GiangVien 
+        $result1 = DB::select("SELECT namhoc.MaNH, namhoc.TenNH, hocki.MaHK, hocki.TenHK, monhoc.MaMH, monhoc.TenMH, lop.MaLop, lop.TenLop, giangvien.MaGV, giangvien.TenGV, chitietmonhoc.SoTiet, chitietmonhoc.SoLuongSV, chitietmonhoc.SoChiTH FROM namhoc, hocki, lop, monhoc, giangvien, chitietmonhoc WHERE namhoc.MaNH = chitietmonhoc.MaNH AND hocki.MaHK = chitietmonhoc.MaHK AND monhoc.MaMH = chitietmonhoc.MaMH AND lop.MaLop = chitietmonhoc.MaLop AND giangvien.MaGV = chitietmonhoc.MaGV AND chitietmonhoc.MaNH = $MaNH
+            $Lop $HocKi $MonHoc $GiangVien 
         ");
 
         $result2 = DB::select("SELECT DISTINCT chitietmonhoc.MaGV FROM chitietmonhoc WHERE chitietmonhoc.MaNH = $MaNH");

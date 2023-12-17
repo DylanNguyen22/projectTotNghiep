@@ -12,22 +12,22 @@ class MajorsModel extends Model
 
     public function getAllMajors()
     {
-        $majors = DB::select('SELECT * FROM nganh ORDER BY MaNganh DESC');
+        $majors = DB::select('SELECT * FROM lop ORDER BY MaLop DESC');
         return $majors;
     }
 
     public function getMajorListByScholastic($data){
         $MaNH = $data['id'];
-        $result = DB::select("SELECT nganh.MaNganh, nganh.TenNganh FROM chitietmonhoc, nganh WHERE nganh.MaNganh = chitietmonhoc.MaNganh AND chitietmonhoc.MaNH = '$MaNH' GROUP BY nganh.MaNganh, nganh.TenNganh");
+        $result = DB::select("SELECT lop.MaLop, lop.TenLop FROM chitietmonhoc, lop WHERE lop.MaLop = chitietmonhoc.MaLop AND chitietmonhoc.MaNH = '$MaNH' GROUP BY lop.MaLop, lop.TenLop");
         return $result;
     }
 
     public function addMajor($data)
     {
-        $TenNganh = $data['TenNganh'];
-        $check = DB::select("SELECT * FROM nganh WHERE TenNganh = '$TenNganh'");
+        $TenLop = $data['TenLop'];
+        $check = DB::select("SELECT * FROM lop WHERE TenLop = '$TenLop'");
         if ($check == null) {
-            DB::select("INSERT INTO `nganh`(`TenNganh`) VALUES ('$TenNganh')");
+            DB::select("INSERT INTO `lop`(`TenLop`) VALUES ('$TenLop')");
             return 'success';
         } else {
             return 'false';
@@ -36,12 +36,12 @@ class MajorsModel extends Model
 
     public function editMajor($data)
     {
-        $MaNganh = $data['MaNganh'];
-        $TenNganh = $data['TenNganh'];
+        $MaLop = $data['MaLop'];
+        $TenLop = $data['TenLop'];
 
-        $check = DB::select("SELECT * FROM nganh WHERE TenNganh = '$TenNganh'");
+        $check = DB::select("SELECT * FROM lop WHERE TenLop = '$TenLop'");
         if ($check == null) {
-            DB::select("UPDATE `nganh` SET `TenNganh`='$TenNganh' WHERE `MaNganh` = '$MaNganh'");
+            DB::select("UPDATE `lop` SET `TenLop`='$TenLop' WHERE `MaLop` = '$MaLop'");
             return 'success';
         } else {
             return 'false';
@@ -49,7 +49,7 @@ class MajorsModel extends Model
     }
 
     public function deleteMajor($data){
-        $MaNganh = $data['id'];
-        DB::select("DELETE FROM `nganh` WHERE `MaNganh` = $MaNganh");
+        $MaLop = $data['id'];
+        DB::select("DELETE FROM `lop` WHERE `MaLop` = $MaLop");
     }
 }

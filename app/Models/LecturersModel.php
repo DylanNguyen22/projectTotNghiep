@@ -11,7 +11,7 @@ class LecturersModel extends Model
     use HasFactory;
 
     public function getLecturersList(){
-        $data = DB::select("SELECT * FROM giangvien");
+        $data = DB::select("SELECT * FROM giangvien ORDER BY MaGV DESC");
         return $data;
     }
 

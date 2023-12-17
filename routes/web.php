@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\MajorsController;
 use App\Http\Controllers\ScholasticController;
@@ -55,16 +56,16 @@ Route::prefix('/hocki')->group(function () {
     Route::post('/suahocki', [SemesterController::class, 'editSemester'])->name('semester.edit');
 
     Route::get('/lay-hoc-ki-theo-nam-hoc', [SemesterController::class, 'getSemesterListByScholastic'])->name('semeterByScholastic.list');
-    Route::get('/lay-hoc-ki-theo-nganh-hoc', [SemesterController::class, 'getSemesterListByMajor'])->name('semeterByMajor.list');
+    Route::get('/lay-hoc-ki-theo-lop-hoc', [SemesterController::class, 'getSemesterListByMajor'])->name('semeterByMajor.list');
 });
 
-Route::prefix('/nganhhoc')->group(function () {
-    Route::post('/themnganhhoc', [MajorsController::class, 'addMajor'])->name('major.add');
-    Route::get('/xoanganhhoc', [MajorsController::class, 'deleteMajor'])->name('major.delete');
-    Route::get('/laydanhsachnganh', [MajorsController::class, 'getAllMajors'])->name('major.list');
-    Route::post('/suanganhhoc', [MajorsController::class, 'editMajor'])->name('major.edit');
+Route::prefix('/lophoc')->group(function () {
+    Route::post('/themlophoc', [MajorsController::class, 'addMajor'])->name('major.add');
+    Route::get('/xoalophoc', [MajorsController::class, 'deleteMajor'])->name('major.delete');
+    Route::get('/laydanhsachlop', [MajorsController::class, 'getAllMajors'])->name('major.list');
+    Route::post('/sualophoc', [MajorsController::class, 'editMajor'])->name('major.edit');
 
-    Route::get('/lay-nganh-hoc-theo-nam-hoc', [MajorsController::class, 'getMajorListByScholastic'])->name('majorByScholastic.list');
+    Route::get('/lay-lop-hoc-theo-nam-hoc', [MajorsController::class, 'getMajorListByScholastic'])->name('majorByScholastic.list');
 });
 
 Route::prefix('/monhoc')->group(function () {
@@ -92,6 +93,13 @@ Route::prefix('/giangvien')->group(function () {
     Route::get('/xoagiangvien', [LecturersController::class, 'deleteLecturer'])->name('lecturer.delete');
     Route::get('/laydanhsachgiangvien', [LecturersController::class, 'getLecturersList'])->name('lecturers.list');
     Route::post('/suagiangvien', [LecturersController::class, 'editLecturers'])->name('lecturers.edit');
+});
+
+Route::prefix('/taikhoan')->group(function () {
+    Route::post('/themtaikhoan', [AccountsController::class, 'addAccount'])->name('account.add');
+    Route::get('/xoataikhoan', [AccountsController::class, 'deleteAccount'])->name('account.delete');
+    Route::get('/laydanhsachtaikhoan', [AccountsController::class, 'getAllAccount'])->name('accounts.list');
+    Route::post('/doimatkhau', [AccountsController::class, 'changePassword'])->name('account.changePassword');
 });
 
 

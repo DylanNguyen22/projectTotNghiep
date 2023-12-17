@@ -9,12 +9,12 @@
             <div class="pb-2 pt-4 px-3">
                 <div class="">
                     <div class="input-group border border-primary rounded">
-                        <span class="input-group-text text-primary" id="basic-addon1">Ngành học</span>
+                        <span class="input-group-text text-primary" id="basic-addon1">Lớp học</span>
                         <select class="form-select" aria-label="Default select example" id="availableMajor"
                             name="availableMajor">
-                            <option>Chọn ngành học đã lưu</option>
+                            <option>Chọn lớp học đã lưu</option>
                         </select>
-                        <input type="text" class="form-control w-50" placeholder="Nhập tên ngành học mới"
+                        <input type="text" class="form-control w-50" placeholder="Nhập tên lớp học mới"
                             aria-label="Username" aria-describedby="basic-addon1" maxlength="30" name="newMajor">
                     </div>
                     <br>
@@ -83,7 +83,7 @@
                     <th>Số tiết</th>
                     <th>Số chỉ thực hành</th>
                     <th>Số lượng sinh viên</th>
-                    <th>Ngành học</th>
+                    <th>Lớp</th>
                     <th>Học kì</th>
                     <th>Năm học</th>
                     <th></th>
@@ -116,10 +116,11 @@
                 url: '{{ route('major.list') }}',
                 success: function(response) {
                     var availableMajor = document.getElementById('availableMajor');
+                    availableMajor.innerHTML = '';
                     Object.keys(response).forEach(key => {
                         var option = document.createElement("option");
-                        option.value = response[key].MaNganh;
-                        option.textContent = response[key].TenNganh;
+                        option.value = response[key].MaLop;
+                        option.textContent = response[key].TenLop;
 
                         availableMajor.appendChild(option)
                     });
@@ -136,6 +137,7 @@
                 url: '{{ route('subject.list') }}',
                 success: function(response) {
                     var availableMajor = document.getElementById('availableSubject');
+                    availableMajor.innerHTML = '';
                     Object.keys(response).forEach(key => {
                         var option = document.createElement("option");
                         option.value = response[key].MaMH;
@@ -156,6 +158,7 @@
                 url: '{{ route('scholastic.list') }}',
                 success: function(response) {
                     var availableMajor = document.getElementById('availableScholastic');
+                    availableMajor.innerHTML = '';
                     Object.keys(response).forEach(key => {
                         var option = document.createElement("option");
                         option.value = response[key].MaNH;
@@ -176,6 +179,7 @@
                 url: '{{ route('semester.list') }}',
                 success: function(response) {
                     var availableMajor = document.getElementById('availableSemester');
+                    availableMajor.innerHTML = '';
                     Object.keys(response).forEach(key => {
                         var option = document.createElement("option");
                         option.value = response[key].MaHK;
@@ -303,7 +307,7 @@
             tr.appendChild(td);
 
             var td = document.createElement("td");
-            td.textContent = response[0].TenNganh;
+            td.textContent = response[0].TenLop;
             tr.appendChild(td);
 
             var td = document.createElement("td");
@@ -359,7 +363,7 @@
                             var url = "/chitietmonhoc/xoachitietmonhoc?id=" +
                                 response[0].MaMH + "," + response[0].MaHK +
                                 "," +
-                                response[0].MaNH + "," + response[0].MaNganh +
+                                response[0].MaNH + "," + response[0].MaLop +
                                 "," +
                                 response[0].MaGV;
                             axios.get(url)

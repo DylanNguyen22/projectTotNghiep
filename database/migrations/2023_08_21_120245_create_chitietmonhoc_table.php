@@ -12,11 +12,12 @@ return new class extends Migration {
     {
         Schema::create('ChiTietMonHoc', function (Blueprint $table) {
             $table->integer("SoLuongSV");
-            $table->integer("SoTinChi");
+            $table->integer("SoTiet");
+            $table->integer("SoChiTH");
             $table->string('MaMH');
             $table->unsignedInteger('MaHK');
             $table->unsignedInteger('MaNH');
-            $table->unsignedInteger('MaNganh');
+            $table->unsignedInteger('MaLop');
             $table->unsignedInteger("MaGV");
 
             $table->foreign(['MaMH'])
@@ -34,8 +35,8 @@ return new class extends Migration {
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
 
-            $table->foreign(['MaNganh'])
-                ->references('MaNganh')->on('Nganh')
+            $table->foreign(['MaLop'])
+                ->references('MaLop')->on('Lop')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
 
